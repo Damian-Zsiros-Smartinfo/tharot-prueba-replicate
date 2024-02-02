@@ -17,7 +17,10 @@ export default function Home() {
     <>
       <Header onClick={changeVisibleMenu} visible={visibleLateralMenu} />
       <main>
-        <LateralMenu visible={visibleLateralMenu}></LateralMenu>
+        <LateralMenu
+          visible={visibleLateralMenu}
+          changeVisibleMenu={changeVisibleMenu}
+        ></LateralMenu>
       </main>
     </>
   );

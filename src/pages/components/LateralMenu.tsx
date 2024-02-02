@@ -1,16 +1,18 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { MouseEventHandler, useState } from "react";
 import { linksLateralMenu } from "@/linksLateralMenu";
 import { ChildrensMenu } from "./ChildrensMenu";
 import { Link } from "@/interfaces/Links";
 import { PrimaryMenu } from "./PrimaryMenu";
+import CloseIcon from "./icons/CloseIcon";
 
 export interface Props {
   visible: boolean;
+  changeVisibleMenu: MouseEventHandler<HTMLButtonElement>;
 }
 
-const LateralMenu: React.FC<Props> = ({ visible }) => {
+const LateralMenu: React.FC<Props> = ({ visible, changeVisibleMenu }) => {
   const [isPrimaryMenu, setIsPrimaryMenu] = useState(true);
   const [childrensLink, setChildrensLink] = useState<Link[]>([]);
 
@@ -25,14 +27,27 @@ const LateralMenu: React.FC<Props> = ({ visible }) => {
         !visible ? "slide-right-animate" : "slide-left-animate"
       }  w-[300px] px-4 transition min-h-[90vh]`}
     >
-      {isPrimaryMenu ? (
-        <PrimaryMenu links={linksLateralMenu} onClick={handleMenuItemClick} />
-      ) : (
-        <ChildrensMenu
-          childrens={childrensLink}
-          onClick={handleMenuItemClick}
-        />
-      )}
+      <header className="flex justify-end">
+        <button
+          type="button"
+          onClick={changeVisibleMenu}
+          className="w-6 transition hover:scale-110"
+        >
+          <CloseIcon />
+        </button>
+      </header>
+      <main>
+        {" "}
+        {isPrimaryMenu ? (
+          <PrimaryMenu links={linksLateralMenu} onClick={handleMenuItemClick} />
+        ) : (
+          <ChildrensMenu
+            childrens={childrensLink}
+            onClick={handleMenuItemClick}
+          />
+        )}
+      </main>
+      <footer></footer>
     </aside>
   );
 };
