@@ -6,6 +6,8 @@ import { ChildrensMenu } from "./ChildrensMenu";
 import { Link } from "@/interfaces/Links";
 import { PrimaryMenu } from "./PrimaryMenu";
 import CloseIcon from "./icons/CloseIcon";
+import EmailIcon from "./icons/EmailIcon";
+import CalendarIcon from "./icons/CalendarIcon";
 
 export interface Props {
   visible: boolean;
@@ -23,11 +25,11 @@ const LateralMenu: React.FC<Props> = ({ visible, changeVisibleMenu }) => {
 
   return (
     <aside
-      className={`bg-[#fc246c]  ${
+      className={`bg-[#fc246c] flex flex-col  ${
         !visible ? "slide-right-animate" : "slide-left-animate"
       }  w-[300px] px-4 transition min-h-[90vh]`}
     >
-      <header className="flex justify-end">
+      <header className="flex justify-end mb-3">
         <button
           type="button"
           onClick={changeVisibleMenu}
@@ -47,7 +49,13 @@ const LateralMenu: React.FC<Props> = ({ visible, changeVisibleMenu }) => {
           />
         )}
       </main>
-      <footer></footer>
+      <footer className="mt-auto">
+        <hr />
+        <div className="flex gap-2 [&>svg]:w-10 my-2 [&>svg]:cursor-pointer [&>svg]:transition hover:[&>svg]:scale-110">
+          <EmailIcon />
+          <CalendarIcon />
+        </div>
+      </footer>
     </aside>
   );
 };
