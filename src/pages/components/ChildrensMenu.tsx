@@ -24,15 +24,12 @@ export const ChildrensMenu: React.FC<ChildrensMenuProps> = ({
     <ul>
       {childrens?.map((link) => (
         <li key={link.link}>
-          <button
-            className="flex justify-between items-center text-white transition hover:scale-105 w-full"
-            type="button"
-          >
-            <button className="p-4 w-full flex justify-between [&>svg]:w-8">
+          <div className="cursor-pointer flex justify-between items-center text-white transition hover:scale-105 w-full">
+            <div className="p-4 w-full flex justify-between [&>svg]:w-8">
               <span>{link.text}</span>
               <ArrowRightIcon />
-            </button>
-          </button>
+            </div>
+          </div>
         </li>
       ))}
     </ul>

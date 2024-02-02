@@ -17,10 +17,10 @@ export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({ links, onClick }) => (
           onClick={() => onClick(link.childrens || [])}
           className="flex justify-between items-center text-white transition hover:scale-105 w-full"
         >
-          <button className="p-4">{link.text}</button>
-          <button type="button" className="w-7">
+          <div className="p-4">{link.text}</div>
+          <div className="w-7">
             <ArrowRightIcon />
-          </button>
+          </div>
         </button>
       </li>
     ))}
