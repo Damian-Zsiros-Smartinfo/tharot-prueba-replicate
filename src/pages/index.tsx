@@ -16,11 +16,12 @@ export default function Home() {
   return (
     <>
       <Header onClick={changeVisibleMenu} visible={visibleLateralMenu} />
-      <main>
+      <main className="flex gap-3">
         <LateralMenu
           visible={visibleLateralMenu}
           changeVisibleMenu={changeVisibleMenu}
         ></LateralMenu>
+        <main>Hola mundo</main>
       </main>
     </>
   );
