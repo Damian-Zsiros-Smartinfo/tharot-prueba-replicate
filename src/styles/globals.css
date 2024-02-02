@@ -10,7 +10,3 @@
 .slide-left-animate {
   transform: translateX(-300px);
 }
-
-.width-at-slide {
-  width: calc(100% - 300px);
-}
