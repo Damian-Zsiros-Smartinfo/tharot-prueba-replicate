@@ -1,28 +1,13 @@
 /** @format */
 
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Header from "./components/Header";
-import LateralMenu from "./components/LateralMenu";
-import { MouseEventHandler, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import Layout from "./components/Layout";
+import TabsLayout from "./components/TabsLayout";
+import HomeTab from "./tabs/HomeTab";
 
 export default function Home() {
-  const [visibleLateralMenu, setVisibleLateralMenu] = useState(true);
-  const changeVisibleMenu: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setVisibleLateralMenu(!visibleLateralMenu);
-  };
   return (
-    <>
-      <Header onClick={changeVisibleMenu} visible={visibleLateralMenu} />
-      <main className="flex gap-3">
-        <LateralMenu
-          visible={visibleLateralMenu}
-          changeVisibleMenu={changeVisibleMenu}
-        ></LateralMenu>
-        <main>Hola mundo</main>
-      </main>
-    </>
+    <Layout>
+      <TabsLayout />
+    </Layout>
   );
 }

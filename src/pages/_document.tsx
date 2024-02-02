@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { Metadata } from 'next'
+import Providers from "@/redux/providers";
 
 export default function Document() {
   return (
@@ -7,7 +7,7 @@ export default function Document() {
       <Head>
         <title>Tharot</title>
       </Head>
-      <body>
+      <body className="overflow-hidden">
         <Main />
         <NextScript />
       </body>
