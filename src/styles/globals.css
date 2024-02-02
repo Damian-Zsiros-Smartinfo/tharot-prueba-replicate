@@ -1,5 +1,16 @@
+/** @format */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.slide-right-animate {
+  transform: translateX(0);
+}
+.slide-left-animate {
+  transform: translateX(-300px);
+}
 
+.width-at-slide {
+  width: calc(100% - 300px);
+}

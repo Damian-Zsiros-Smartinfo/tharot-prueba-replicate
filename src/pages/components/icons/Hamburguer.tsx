@@ -1,12 +1,13 @@
+/** @format */
+
 import React from "react";
 
 export default function Hamburguer() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
-      className="max-w-[50px]"
+      width="40px"
+      height="40px"
       viewBox="0 0 40.721 24.857"
     >
       <g id="open-menu" transform="translate(0 2)">
