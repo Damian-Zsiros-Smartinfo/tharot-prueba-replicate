@@ -11,4 +11,16 @@
 .slide-left-animate {
   transform: translateX(-300px);
   width: 0;
+  animation: animationLeft 500ms ease;
+}
+
+
+@keyframes animationLeft {
+  from {
+    width: 300px;
+  }
+
+  to {
+    width: 0;
+  }
 }

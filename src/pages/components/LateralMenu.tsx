@@ -26,7 +26,7 @@ const LateralMenu: React.FC<Props> = ({ visible, changeVisibleMenu }) => {
   return (
     <aside
       className={`bg-[#fc246c] flex flex-col   ${!visible ? "slide-right-animate px-4" : "slide-left-animate"
-        }  w-[300px]  transition min-h-[90vh]`}
+        }  w-[300px]  transition duration-500	 min-h-[90vh]`}
     >
       <header className="flex justify-end mb-3">
         <button
