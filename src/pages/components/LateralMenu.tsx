@@ -8,19 +8,41 @@ import { PrimaryMenu } from "./PrimaryMenu";
 import CloseIcon from "./icons/CloseIcon";
 import EmailIcon from "./icons/EmailIcon";
 import CalendarIcon from "./icons/CalendarIcon";
+import { useAppDispatch } from "@/redux/features/hooks";
+import { addTab, changeActiveTab } from "@/redux/features/tabsSlice";
 
 export interface Props {
   visible: boolean;
   changeVisibleMenu: MouseEventHandler<HTMLButtonElement>;
+  activeFileComponent: string;
+  setActiveFileComponent: React.Dispatch<React.SetStateAction<string>>;
+  tabs: {
+    text: string;
+    nameFile: string;
+    fixed: boolean;
+  }[];
+  activeIndex: number;
 }
 
-const LateralMenu: React.FC<Props> = ({ visible, changeVisibleMenu }) => {
+const LateralMenu: React.FC<Props> = ({
+  visible,
+  changeVisibleMenu,
+  tabs,
+  activeIndex,
+  activeFileComponent,
+  setActiveFileComponent
+}) => {
   const [isPrimaryMenu, setIsPrimaryMenu] = useState(true);
   const [childrensLink, setChildrensLink] = useState<Link[]>([]);
+  const dispatch = useAppDispatch();
 
   const handleMenuItemClick = (childrens: Link[]) => {
     setIsPrimaryMenu(!isPrimaryMenu);
     setChildrensLink(childrens);
+  };
+
+  const handleAddTab = (info: { text: string; component: string }) => {
+    dispatch(addTab(info));
   };
 
   return (
@@ -46,6 +68,7 @@ const LateralMenu: React.FC<Props> = ({ visible, changeVisibleMenu }) => {
           <ChildrensMenu
             childrens={childrensLink}
             onClick={handleMenuItemClick}
+            onClickAddTab={handleAddTab}
           />
         )}
       </main>

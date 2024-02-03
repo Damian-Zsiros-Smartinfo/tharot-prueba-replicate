@@ -8,21 +8,21 @@ interface PrimaryMenuProps {
   onClick: (childrens: Link[]) => void;
 }
 
-export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({ links, onClick }) => (
-  <ul>
-    {links.map((link) => (
-      <li key={link.link}>
-        <button
-          type="button"
-          onClick={() => onClick(link.childrens || [])}
-          className="flex justify-between items-center text-white transition hover:scale-105 w-full"
-        >
-          <div className="p-4">{link.text}</div>
-          <div className="w-7">
-            <ArrowRightIcon />
-          </div>
-        </button>
-      </li>
-    ))}
-  </ul>
-);
+export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({ links, onClick }) => {
+  return (
+    <ul>
+      {links.map((link) => (
+        <li key={link.link}>
+          <article className="flex justify-between items-center text-white transition hover:scale-105 w-full">
+            <div className="p-4">{link.text}</div>
+            <button type="button" onClick={() => onClick(link.childrens || [])}>
+              <div className="w-7">
+                <ArrowRightIcon />
+              </div>
+            </button>
+          </article>
+        </li>
+      ))}
+    </ul>
+  );
+};

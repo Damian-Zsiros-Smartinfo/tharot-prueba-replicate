@@ -11,14 +11,22 @@ const initialState = {
       fixed: true
     }
   ],
-  id: 1,
   activeTab: 0
 };
 export const tabsSlice = createSlice({
   name: "tabs",
   initialState,
   reducers: {
-    addTab: (state, action) => {},
+    addTab: (state, action) => {
+      const info: { text: string; component: string } = action.payload;
+      state.tabs.push({
+        text: info.text,
+        nameFile: info.component,
+        fixed: false
+      });
+
+      state.activeTab = state.tabs.length - 1;
+    },
     changeActiveTab: (state, action) => {
       const tabIndex = action.payload;
       state.activeTab = tabIndex;

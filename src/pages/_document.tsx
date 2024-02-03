@@ -1,3 +1,5 @@
+/** @format */
+
 import { Html, Head, Main, NextScript } from "next/document";
 import Providers from "@/redux/providers";
 

@@ -10,12 +10,24 @@ import {
 import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 
-export default function TabsLayout() {
+interface Props {
+  activeFileComponent: string;
+  setActiveFileComponent: React.Dispatch<React.SetStateAction<string>>;
+  tabs: {
+    text: string;
+    nameFile: string;
+    fixed: boolean;
+  }[];
+  activeIndex: number;
+}
+
+export default function TabsLayout({
+  activeFileComponent,
+  setActiveFileComponent
+}: Props) {
   const tabs = useAppSelector((state) => state.tabsReducer.tabs);
   const activeIndex = useAppSelector((state) => state.tabsReducer.activeTab);
-  const [activeFileComponent, setActiveFileComponent] = useState(
-    tabs[activeIndex]?.nameFile || "Home.tsx"
-  );
+
   const dispatch = useAppDispatch();
 
   const TabActiveView = lazy(() => import(`../tabs/${activeFileComponent}`));
@@ -38,7 +50,7 @@ export default function TabsLayout() {
           <ul className="flex gap-1 h-full items-center">
             {tabs.map((tab, i) => (
               <li
-                className={` rounded  transition  w-24 h-full p-2  ${
+                className={` rounded  transition  min-w-24 h-full p-2  ${
                   i == activeIndex
                     ? "bg-zinc-50 opacity-80 hover:opacity-100 text-gray-800 "
                     : "bg-gray-200 text-gray-400 hover:bg-gray-100 hover:text-gray-800"
@@ -52,7 +64,9 @@ export default function TabsLayout() {
                   <button
                     type="button"
                     className="w-4"
-                    onClick={() => onClickCloseTab(i)}
+                    onClick={() => {
+                      onClickCloseTab(i);
+                    }}
                   >
                     {!tab.fixed && <CloseIcon color="#000000" />}
                   </button>
