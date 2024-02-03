@@ -33,9 +33,6 @@ export default function Layout({
       <Header onClick={changeVisibleMenu} visible={visibleLateralMenu} />
       <main className="w-full flex h-[94vh] ">
         <LateralMenu
-          tabs={tabs}
-          activeIndex={activeIndex}
-          activeFileComponent={activeFileComponent}
           setActiveFileComponent={setActiveFileComponent}
           visible={visibleLateralMenu}
           changeVisibleMenu={changeVisibleMenu}

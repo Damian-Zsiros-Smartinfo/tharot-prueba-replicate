@@ -9,27 +9,17 @@ import CloseIcon from "./icons/CloseIcon";
 import EmailIcon from "./icons/EmailIcon";
 import CalendarIcon from "./icons/CalendarIcon";
 import { useAppDispatch } from "@/redux/features/hooks";
-import { addTab, changeActiveTab } from "@/redux/features/tabsSlice";
+import { addTab } from "@/redux/features/tabsSlice";
 
 export interface Props {
   visible: boolean;
   changeVisibleMenu: MouseEventHandler<HTMLButtonElement>;
-  activeFileComponent: string;
   setActiveFileComponent: React.Dispatch<React.SetStateAction<string>>;
-  tabs: {
-    text: string;
-    nameFile: string;
-    fixed: boolean;
-  }[];
-  activeIndex: number;
 }
 
 const LateralMenu: React.FC<Props> = ({
   visible,
   changeVisibleMenu,
-  tabs,
-  activeIndex,
-  activeFileComponent,
   setActiveFileComponent
 }) => {
   const [isPrimaryMenu, setIsPrimaryMenu] = useState(true);
@@ -43,6 +33,9 @@ const LateralMenu: React.FC<Props> = ({
 
   const handleAddTab = (info: { text: string; component: string }) => {
     dispatch(addTab(info));
+    if (setActiveFileComponent) {
+      setActiveFileComponent(info.component);
+    }
   };
 
   return (
