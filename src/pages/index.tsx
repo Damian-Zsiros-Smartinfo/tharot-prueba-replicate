@@ -3,20 +3,13 @@
 import { useState } from "react";
 import Layout from "./components/Layout";
 import TabsLayout from "./components/TabsLayout";
-import HomeTab from "./tabs/HomeTab";
 import { useAppSelector } from "@/redux/features/hooks";
 import Providers from "@/redux/providers";
+import { NavigationBar } from "@/interfaces/NavigationBar";
 
-interface Props {
-  tabs: {
-    text: string;
-    nameFile: string;
-    fixed: boolean;
-  }[];
-  activeIndex: number;
-}
+interface Props extends NavigationBar {}
 
-export default function Home({}: Props) {
+export default function Home(props: Props) {
   const tabs = useAppSelector((state) => state.tabsReducer.tabs);
   const activeIndex = useAppSelector((state) => state.tabsReducer.activeTab);
   const [activeFileComponent, setActiveFileComponent] = useState(
@@ -24,7 +17,7 @@ export default function Home({}: Props) {
   );
   return (
     <LayoutMain>
-      <Layout tabs={tabs} activeIndex={activeIndex}>
+      <Layout setActiveFileComponent={setActiveFileComponent}>
         <TabsLayout
           tabs={tabs}
           activeIndex={activeIndex}

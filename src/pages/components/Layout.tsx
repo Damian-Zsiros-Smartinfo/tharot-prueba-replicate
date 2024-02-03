@@ -6,24 +6,11 @@ import Header from "./Header";
 import LateralMenu from "./LateralMenu";
 
 interface Props {
-  children: React.ReactNode;
-  tabs: {
-    text: string;
-    nameFile: string;
-    fixed: boolean;
-  }[];
-  activeIndex: number;
-  activeFileComponent: string;
+  children?: React.ReactNode;
   setActiveFileComponent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Layout({
-  children,
-  tabs,
-  activeIndex,
-  activeFileComponent,
-  setActiveFileComponent
-}: Props) {
+export default function Layout({ children, setActiveFileComponent }: Props) {
   const [visibleLateralMenu, setVisibleLateralMenu] = useState(true);
   const changeVisibleMenu: MouseEventHandler<HTMLButtonElement> = (e) => {
     setVisibleLateralMenu(!visibleLateralMenu);

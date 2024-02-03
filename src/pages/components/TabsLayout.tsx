@@ -1,12 +1,8 @@
 /** @format */
 
-import React, { Suspense, useState, lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import CloseIcon from "./icons/CloseIcon";
-import {
-  AppDispatch,
-  changeActiveTab,
-  closeTab
-} from "@/redux/features/tabsSlice";
+import { changeActiveTab, closeTab } from "@/redux/features/tabsSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { NavigationBar } from "@/interfaces/NavigationBar";
 
