@@ -7,7 +7,7 @@ import ArrowRightIcon from "./icons/ArrowRightIcon";
 interface ChildrensMenuProps {
   childrens?: Link[];
   onClick: (childrens: Link[]) => void;
-  onClickAddTab: (info: { text: string; component: string }) => void;
+  onClickAddTab: (info: Tab) => void;
 }
 
 export const ChildrensMenu: React.FC<ChildrensMenuProps> = ({
@@ -35,7 +35,8 @@ export const ChildrensMenu: React.FC<ChildrensMenuProps> = ({
                 onClick={() => {
                   onClickAddTab({
                     text: link.text,
-                    component: link.component || ""
+                    component: link.component || "",
+                    link: link.link
                   });
                 }}
               >

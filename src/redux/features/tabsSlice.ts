@@ -8,7 +8,8 @@ const initialState = {
     {
       text: "Home",
       nameFile: "HomeTab.tsx",
-      fixed: true
+      fixed: true,
+      link: "/usuarios"
     }
   ],
   activeTab: 0
@@ -18,11 +19,12 @@ export const tabsSlice = createSlice({
   initialState,
   reducers: {
     addTab: (state, action) => {
-      const info: { text: string; component: string } = action.payload;
+      const info: Tab = action.payload;
       state.tabs.push({
         text: info.text,
         nameFile: info.component,
-        fixed: false
+        fixed: false,
+        link: info.link || "/"
       });
 
       state.activeTab = state.tabs.length - 1;

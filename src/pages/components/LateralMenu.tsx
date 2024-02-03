@@ -31,7 +31,7 @@ const LateralMenu: React.FC<Props> = ({
     setChildrensLink(childrens);
   };
 
-  const handleAddTab = (info: { text: string; component: string }) => {
+  const handleAddTab = (info: Tab) => {
     dispatch(addTab(info));
     if (setActiveFileComponent) {
       setActiveFileComponent(info.component);
