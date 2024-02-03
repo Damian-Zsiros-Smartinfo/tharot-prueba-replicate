@@ -48,3 +48,5 @@ export const ChildrensMenu: React.FC<ChildrensMenuProps> = ({
     </ul>
   </>
 );
+
+export default ChildrensMenu;

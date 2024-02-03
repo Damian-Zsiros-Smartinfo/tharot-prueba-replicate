@@ -6,6 +6,7 @@ import TabsLayout from "./components/TabsLayout";
 import { useAppSelector } from "@/redux/features/hooks";
 import Providers from "@/redux/providers";
 import { NavigationBar } from "@/interfaces/NavigationBar";
+import Head from "next/head";
 
 interface Props extends NavigationBar {}
 
@@ -17,6 +18,9 @@ export default function Home(props: Props) {
   );
   return (
     <LayoutMain>
+      <Head>
+        <title>Tharot</title>
+      </Head>
       <Layout setActiveFileComponent={setActiveFileComponent}>
         <TabsLayout
           tabs={tabs}

@@ -8,7 +8,10 @@ interface PrimaryMenuProps {
   onClick: (childrens: Link[]) => void;
 }
 
-export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({ links, onClick }) => {
+export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({
+  links = [],
+  onClick
+}) => {
   return (
     <ul>
       {links.map((link, i) => (
@@ -26,3 +29,5 @@ export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({ links, onClick }) => {
     </ul>
   );
 };
+
+export default PrimaryMenu;

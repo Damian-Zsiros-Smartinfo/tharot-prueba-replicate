@@ -6,9 +6,7 @@ import Providers from "@/redux/providers";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head>
-        <title>Tharot</title>
-      </Head>
+      <Head></Head>
       <body className="overflow-hidden">
         <Main />
         <NextScript />

@@ -20,7 +20,9 @@ export default function TabsLayout({
 
   const dispatch = useAppDispatch();
 
-  const TabActiveView = lazy(() => import(`../tabs/${activeFileComponent}`));
+  const TabActiveView = lazy(
+    () => import(`../tabs/${activeFileComponent || "HomeTab.tsx"}`)
+  );
 
   const onClick = (i: number) => {
     dispatch(changeActiveTab(i));
