@@ -7,11 +7,13 @@ export const linksLateralMenu = [
     childrens: [
       {
         text: "Ingresar",
-        link: "/usuarios/ingresar"
+        link: "/usuarios/ingresar",
+        component: "HomeTab.tsx"
       },
       {
         text: "Adminsitrar",
-        link: "/usuarios/administrar"
+        link: "/usuarios/administrar",
+        component: "Home2Tab.tsx"
       }
     ]
   },
@@ -21,11 +23,13 @@ export const linksLateralMenu = [
     childrens: [
       {
         text: "Ingresar",
-        link: "/clientes/ingresar"
+        link: "/clientes/ingresar",
+        component: "Home2Tab.tsx"
       },
       {
         text: "Adminsitrar",
-        link: "/clientes/administrar"
+        link: "/clientes/administrar",
+        component: "IngresarTab.tsx"
       }
     ]
   },
@@ -35,11 +39,13 @@ export const linksLateralMenu = [
     childrens: [
       {
         text: "Ingresar",
-        link: "/clientes/ingresar"
+        link: "/clientes/ingresar",
+        component: "Home2Tab.tsx"
       },
       {
         text: "Adminsitrar",
-        link: "/proveedores/administrar"
+        link: "/proveedores/administrar",
+        component: "IngresarTab.tsx"
       }
     ]
   }
