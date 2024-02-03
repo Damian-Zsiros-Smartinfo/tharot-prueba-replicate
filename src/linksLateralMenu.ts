@@ -8,7 +8,7 @@ export const linksLateralMenu = [
       {
         text: "Ingresar",
         link: "/usuarios/ingresar",
-        component: "HomeTab.tsx"
+        component: "Home7Tab.tsx"
       },
       {
         text: "Adminsitrar",
@@ -24,12 +24,12 @@ export const linksLateralMenu = [
       {
         text: "Ingresar",
         link: "/clientes/ingresar",
-        component: "Home2Tab.tsx"
+        component: "Home3Tab.tsx"
       },
       {
         text: "Adminsitrar",
         link: "/clientes/administrar",
-        component: "IngresarTab.tsx"
+        component: "Home6Tab.tsx"
       }
     ]
   },
@@ -40,12 +40,12 @@ export const linksLateralMenu = [
       {
         text: "Ingresar",
         link: "/clientes/ingresar",
-        component: "Home2Tab.tsx"
+        component: "Home4Tab.tsx"
       },
       {
         text: "Adminsitrar",
         link: "/proveedores/administrar",
-        component: "IngresarTab.tsx"
+        component: "Home5Tab.tsx"
       }
     ]
   }
