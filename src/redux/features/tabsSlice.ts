@@ -2,7 +2,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { store } from "../store";
-import Home from "@/pages";
 
 const initialState = {
   tabs: [
@@ -10,10 +9,6 @@ const initialState = {
       text: "Home",
       nameFile: "HomeTab.tsx",
       fixed: true
-    },
-    {
-      text: "Home 2",
-      nameFile: "Home2Tab.tsx"
     }
   ],
   id: 1,
@@ -25,10 +20,8 @@ export const tabsSlice = createSlice({
   reducers: {
     addTab: (state, action) => {},
     changeActiveTab: (state, action) => {
-      console.log(action.payload);
       const tabIndex = action.payload;
       state.activeTab = tabIndex;
-      console.log({ tabIndex, active: state.activeTab });
     },
     closeTab: (state, action) => {
       const tabIndex = action.payload;
