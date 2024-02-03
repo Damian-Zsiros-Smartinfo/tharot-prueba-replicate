@@ -11,8 +11,8 @@ interface PrimaryMenuProps {
 export const PrimaryMenu: React.FC<PrimaryMenuProps> = ({ links, onClick }) => {
   return (
     <ul>
-      {links.map((link) => (
-        <li key={link.link}>
+      {links.map((link, i) => (
+        <li key={i}>
           <article className="flex justify-between items-center text-white transition hover:scale-105 w-full">
             <div className="p-4">{link.text}</div>
             <button type="button" onClick={() => onClick(link.childrens || [])}>

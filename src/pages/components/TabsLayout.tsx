@@ -49,7 +49,7 @@ export default function TabsLayout({
                     ? "bg-zinc-50 opacity-80 hover:opacity-100 text-gray-800 "
                     : "bg-gray-200 text-gray-400 hover:bg-gray-100 hover:text-gray-800"
                 }`}
-                key={tab.nameFile}
+                key={i}
               >
                 <article className="cursor-pointer flex justify-between w-full transition hover:[&>svg]:scale-110  items-center [&>svg]:w-4 [&>svg]:transition [&>svg]:opacity-70 hover:[&>svg]:opacity-100">
                   <button type="button" onClick={() => onClick(i)}>
