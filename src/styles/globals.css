@@ -6,6 +6,8 @@
 
 .slide-right-animate {
   transform: translateX(0);
+  width: 300px;
+  animation: animationRight 500ms ease;
 }
 
 .slide-left-animate {
@@ -14,7 +16,6 @@
   animation: animationLeft 500ms ease;
 }
 
-
 @keyframes animationLeft {
   from {
     width: 300px;
@@ -22,5 +23,14 @@
 
   to {
     width: 0;
+  }
+}
+
+@keyframes animationRight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 300px;
   }
 }
