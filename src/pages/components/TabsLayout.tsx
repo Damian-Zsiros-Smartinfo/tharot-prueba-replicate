@@ -44,7 +44,7 @@ export default function TabsLayout({
           <ul className="flex gap-1 h-full items-center overflow-x-scroll overflow-y-hidden">
             {tabs.map((tab, i) => (
               <li
-                className={` rounded  transition  min-w-24 h-full p-2  ${
+                className={` rounded  transition  min-w-30 w-fit h-full p-2  ${
                   i == activeIndex
                     ? "bg-zinc-50 opacity-80 hover:opacity-100 text-gray-800 "
                     : "bg-gray-200 text-gray-400 hover:bg-gray-100 hover:text-gray-800"
