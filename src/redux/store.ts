@@ -3,6 +3,6 @@ import tabsReducer from '@/redux/features/tabsSlice'
 
 export const store = configureStore({
     reducer:{
-        tabsReducer
+        tabsReducer  
     }
 })
