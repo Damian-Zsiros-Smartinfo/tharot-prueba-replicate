@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSocket } from "../components/SocketProvider";
-import ChatLayout from "../components/ChatLayout";
 import { io } from "socket.io-client";
 interface Message {
   id: string;
