@@ -2,6 +2,6 @@
 
 interface Tab {
   text: string;
-  component: string;
+  component?: string;
   link: string;
 }
