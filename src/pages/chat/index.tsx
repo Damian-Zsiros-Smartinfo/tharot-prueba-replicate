@@ -7,8 +7,9 @@ interface Message {
 }
 
 export default function Chat() {
-  const socket = useRef(io("http://localhost:3500"));
-  const [NameActor, setNameActor] = useState<string>("Anonimo");
+  const socket = useRef(io("http://localhost:4000"));
+  const [NameActor, setNameActor] = useState<string>("");
+  const [NameObtained, setNameObtained] = useState(false);
   const [Messages, setMessages] = useState<Message[]>([]);
   const [Message, setMessage] = useState("");
 
@@ -16,10 +17,11 @@ export default function Chat() {
     socket.current.on("server:loadmessages", (data: any) => {
       setMessages(data as Message[]);
     });
-    if (NameActor == "Anonimo") {
-      setNameActor(prompt("Ingresa tu mensaje") || "Anonimo");
+    if (!NameObtained) {
+      setNameActor(prompt("Ingresa tu nombre para acceder al chat:") || "");
+      setNameObtained(true);
     }
-  }, [NameActor]);
+  }, [NameObtained]);
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     socket.current.emit("server:addMessage", {
       id: crypto.randomUUID(),
@@ -39,20 +41,17 @@ export default function Chat() {
             Nombre actual en la sala: <b>{NameActor}</b>
           </h2>
         </header>
-        <section className="flex flex-col gap-2  justify-end w-full ">
+        <section className="flex flex-col gap-2 ">
           {Messages.map((message) => (
-            <>
-              <article
-                className={`border p-2 rounded max-w-[70%] ${
-                  message.actor != NameActor
-                    ? "text-left"
-                    : "ml-auto text-right"
-                } w-full`}
-              >
-                <b>{message.actor == NameActor ? "Yo" : message.actor}</b>
-                <p>{message.text}</p>
-              </article>
-            </>
+            <article
+              key={message.id}
+              className={`border p-2 rounded max-w-[70%] w-full ${
+                message.actor != NameActor ? "mr-auto" : "ml-auto"
+              }`}
+            >
+              <b>{message.actor == NameActor ? "Yo" : message.actor}</b>
+              <p>{message.text}</p>
+            </article>
           ))}
         </section>
         <footer>
