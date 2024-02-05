@@ -22,7 +22,7 @@ export const tabsSlice = createSlice({
       const info: Tab = action.payload;
       state.tabs.push({
         text: info.text,
-        nameFile: info.component,
+        nameFile: info.component ?? "HomeTab.tsx",
         fixed: false,
         link: info.link || "/"
       });

@@ -34,7 +34,7 @@ const LateralMenu: React.FC<Props> = ({
   const handleAddTab = (info: Tab) => {
     dispatch(addTab(info));
     if (setActiveFileComponent) {
-      setActiveFileComponent(info.component);
+      setActiveFileComponent(info.component ?? "HomeTab.tsx");
     }
   };
 
