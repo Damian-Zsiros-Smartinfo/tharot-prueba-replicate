@@ -40,7 +40,7 @@ const LateralMenu: React.FC<Props> = ({
 
   return (
     <aside
-      className={`bg-[#fc246c] flex flex-col h-[90vh] max-xl:h-[100vh] ${
+      className={`bg-[#fc246c] flex flex-col h-[90vh] xl:h-[93vh] max-xl:h-[100vh] ${
         !visible ? "slide-right-animate px-4" : "slide-left-animate "
       }  w-[300px]  transition duration-500	 min-h-[90vh] `}
     >
