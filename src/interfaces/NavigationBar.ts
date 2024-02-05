@@ -1,10 +1,6 @@
 /** @format */
 
 export interface NavigationBar {
-  tabs: {
-    text: string;
-    nameFile: string;
-    fixed: boolean;
-  }[];
+  tabs: Tab[];
   activeIndex: number;
 }
