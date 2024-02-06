@@ -6,26 +6,45 @@ interface Message {
   text: string;
 }
 
-const socket = io("http://localhost:4000");
+let socket = io("http://localhost:4000");
 
 function Chat({
   NameActor,
   Messages,
-  setMessages
+  setMessages,
 }: {
   NameActor: string;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   Messages: Message[];
 }) {
   const [Message, setMessage] = useState("");
+  const messagesSectionRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if(!messagesSectionRef.current) return
+    messagesSectionRef.current.scrollTop = messagesSectionRef.current.scrollHeight;
+  };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const message = {
+      id: crypto.randomUUID(),
+      actor: NameActor,
+      text: Message.trim(),
+    }
+    setMessages([...Messages, message]);
     socket.emit("server:addMessage", {
       id: crypto.randomUUID(),
       text: Message,
-      actor: NameActor
+      actor: NameActor,
     });
+    scrollToBottom()
   };
+
+  useEffect(() => {
+    socket.on("messages", (data: any) => {
+      setMessages(data as Message[]);
+    });
+  }, []);
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
@@ -38,7 +57,7 @@ function Chat({
             Nombre actual en la sala: <b>{NameActor}</b>
           </h2>
         </header>
-        <section className="flex flex-col gap-2 ">
+        <section className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; ">
           {Messages.map((message) => (
             <article
               key={message.id}
@@ -77,21 +96,22 @@ export default function ChatPage() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameActor(e.target.value);
   };
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const getMessages = () => {
+    fetch("http://localhost:4000/messages").then((res) => {
+      res.json().then((data) => {
+        const { messages } = data;
+        setMessages(messages);
+      });
+    });
+  };
+  const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (NameActor == "") return;
+    await getMessages();
     setNameObtained(true);
     sethasChange(true);
   };
-  useEffect(() => {
-    if (hasChange) {
-      console.log("dsadsa");
-      socket.on("messages", (data: any) => {
-        console.log(data);
-        setMessages(data as Message[]);
-      });
-      sethasChange(false);
-    }
-  }, [hasChange]);
+
   return (
     <>
       {!NameObtained ? (
@@ -121,7 +141,7 @@ export default function ChatPage() {
         </>
       ) : (
         <Chat
-          Messages={Messages}
+        Messages={Messages}
           setMessages={setMessages}
           NameActor={NameActor}
         />
