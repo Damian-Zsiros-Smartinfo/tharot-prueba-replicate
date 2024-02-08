@@ -9,7 +9,7 @@ export default function TrashIcon({ onClick }: Props) {
     <svg
       viewBox="0 0 24 24"
       fill="none"
-      className="opacity-80 hover:opacity-100 transition w-8 cursor-pointer"
+      className="opacity-80 hover:opacity-100 transition min-w-8 w-8 cursor-pointer"
       onClick={onClick}
     >
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

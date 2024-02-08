@@ -64,21 +64,23 @@ export function Chat({
         </header>
         <section
           ref={refContainer}
-          className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container "
+          className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container px-4"
         >
           {Messages.map((message) => (
             <article
               key={message.id}
-              className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between ${
+              className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between scale-100  transition hover:scale-[1.03] ${
                 message.actor != NameActor ? "mr-auto" : "ml-auto"
               }`}
             >
-              <div className="min-w-[80%]">
+              <div className="min-w-[70%]">
                 <b className="text-[#3265b6] text-md opacity-90">
                   {message.actor == NameActor ? "Yo" : message.actor}
                 </b>
-                <p className="text-lg">{message.text}</p>
-                <b className="text-xs w-[100%] text-right">
+                <p className="text-lg cursor-pointer opacity-80 hover:opacity-100 transition">
+                  {message.text}
+                </p>
+                <b className="text-xs w-[100%] text-right opacity-70">
                   {timeAgo(new Date(Date.parse(message.created_at || "")))}
                 </b>
               </div>
