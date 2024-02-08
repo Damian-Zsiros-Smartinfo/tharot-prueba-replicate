@@ -4,6 +4,7 @@ import { timeAgo } from "@/utils/timeAgo";
 import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import EditIcon from "./icons/EditIcon";
+import MessageComponent from "./Message";
 
 export function Chat({
   NameActor,
@@ -67,25 +68,12 @@ export function Chat({
           className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container px-4"
         >
           {Messages.map((message) => (
-            <article
+            <MessageComponent
+              NameActor={NameActor}
+              message={message}
+              onClickDeleteMessage={onClickDeleteMessage}
               key={message.id}
-              className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between scale-100  transition ${
-                message.actor != NameActor ? "mr-auto" : "ml-auto"
-              }`}
-            >
-              <div className="min-w-[80%]">
-                <b className="text-[#3265b6] text-md opacity-90">
-                  {message.actor == NameActor ? "Yo" : message.actor}
-                </b>
-                <p className="text-lg transition">{message.text}</p>
-                <b className="text-xs w-[100%] text-right opacity-70">
-                  {timeAgo(new Date(Date.parse(message.created_at || "")))}
-                </b>
-              </div>
-              {!hasDifferenceOfDateMore3Min(
-                new Date(Date.parse(message.created_at || ""))
-              ) && <EditIcon onClick={onClickDeleteMessage} />}
-            </article>
+            />
           ))}
         </section>
         <footer>
