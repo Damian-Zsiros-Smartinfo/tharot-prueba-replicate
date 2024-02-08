@@ -3,7 +3,7 @@ import { hasDifferenceOfDateMore3Min } from "@/utils/differenceOfDateMore3Min";
 import { timeAgo } from "@/utils/timeAgo";
 import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
-import TrashIcon from "./icons/TrashIcon";
+import EditIcon from "./icons/EditIcon";
 
 export function Chat({
   NameActor,
@@ -69,24 +69,22 @@ export function Chat({
           {Messages.map((message) => (
             <article
               key={message.id}
-              className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between scale-100  transition hover:scale-[1.03] ${
+              className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between scale-100  transition ${
                 message.actor != NameActor ? "mr-auto" : "ml-auto"
               }`}
             >
-              <div className="min-w-[70%]">
+              <div className="min-w-[80%]">
                 <b className="text-[#3265b6] text-md opacity-90">
                   {message.actor == NameActor ? "Yo" : message.actor}
                 </b>
-                <p className="text-lg cursor-pointer opacity-80 hover:opacity-100 transition">
-                  {message.text}
-                </p>
+                <p className="text-lg transition">{message.text}</p>
                 <b className="text-xs w-[100%] text-right opacity-70">
                   {timeAgo(new Date(Date.parse(message.created_at || "")))}
                 </b>
               </div>
               {!hasDifferenceOfDateMore3Min(
                 new Date(Date.parse(message.created_at || ""))
-              ) && <TrashIcon onClick={onClickDeleteMessage} />}
+              ) && <EditIcon onClick={onClickDeleteMessage} />}
             </article>
           ))}
         </section>
