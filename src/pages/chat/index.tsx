@@ -92,12 +92,17 @@ export default function ChatPage() {
     fetch(`${constants.API_URL}/messages`).then((res: Response) => {
       res.json().then((data) => {
         const { messages } = data;
-        console.log(constants.API_URL);
-        console.log(data);
         setMessages(messages);
       });
     });
   };
+
+  useEffect(() => {
+    socket.on("server:loadmessages", (data) => {
+      setMessages(data);
+    });
+  }, []);
+
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (NameActor == "") return;
     await getMessages();
