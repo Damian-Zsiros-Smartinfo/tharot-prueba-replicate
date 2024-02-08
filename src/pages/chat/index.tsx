@@ -12,6 +12,8 @@ export default function ChatPage() {
   const [NameObtained, setNameObtained] = useState(false);
   const [hasChange, sethasChange] = useState(false);
   const [Messages, setMessages] = useState<Message[]>([]);
+  const chatContainerRef = useRef<HTMLElement>(null);
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameActor(e.target.value);
   };
@@ -29,6 +31,9 @@ export default function ChatPage() {
     socket.on("server:loadmessages", (data) => {
       setMessages(data);
     });
+    const conversationContainer = document.querySelector(
+      ".messages-container :last-child"
+    );
   }, []);
 
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,6 +49,7 @@ export default function ChatPage() {
         <JoinPersonAtChatForm onChange={onChange} onClick={onClick} />
       ) : (
         <Chat
+          refContainer={chatContainerRef}
           socket={socket}
           Messages={Messages}
           setMessages={setMessages}

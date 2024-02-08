@@ -7,12 +7,14 @@ export function Chat({
   NameActor,
   Messages,
   setMessages,
-  socket
+  socket,
+  refContainer
 }: {
   NameActor: string;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   Messages: Message[];
   socket: Socket;
+  refContainer: React.RefObject<HTMLElement>;
 }) {
   const [Message, setMessage] = useState("");
   const messagesSectionRef = useRef(null);
@@ -30,10 +32,14 @@ export function Chat({
       text: Message,
       actor: NameActor
     });
+    if (refContainer.current) {
+      refContainer.current.scrollTop = refContainer.current.scrollHeight;
+    }
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     sendMessage();
+    setMessage("");
   };
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -48,7 +54,10 @@ export function Chat({
             Nombre actual en la sala: <b>{NameActor}</b>
           </h2>
         </header>
-        <section className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; ">
+        <section
+          ref={refContainer}
+          className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container "
+        >
           {Messages.map((message) => (
             <article
               key={message.id}
@@ -72,8 +81,10 @@ export function Chat({
             onKeyUp={async (e) => {
               if (e.key === "Enter" && FormSendMesage != 1) {
                 await sendMessage();
+                setMessage("");
               }
             }}
+            value={Message}
           ></textarea>
           {FormSendMesage == 1 && (
             <button
