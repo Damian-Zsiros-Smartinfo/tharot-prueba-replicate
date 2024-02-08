@@ -1,6 +1,6 @@
 import { Message } from "@/types/Message";
 import { timeAgo } from "@/utils/timeAgo";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 
 export function Chat({
@@ -18,7 +18,7 @@ export function Chat({
 }) {
   const [Message, setMessage] = useState("");
   const messagesSectionRef = useRef(null);
-  const [FormSendMesage, setFormSendMesage] = useState(1);
+  const [FormSendMesage, setFormSendMesage] = useState(2);
 
   const sendMessage = () => {
     const message = {
@@ -32,15 +32,17 @@ export function Chat({
       text: Message,
       actor: NameActor
     });
-    if (refContainer.current) {
-      refContainer.current.scrollTop = refContainer.current.scrollHeight;
-    }
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     sendMessage();
     setMessage("");
   };
+  useEffect(() => {
+    if (refContainer.current) {
+      refContainer.current.scrollTop = refContainer.current.scrollHeight;
+    }
+  }, [Messages, refContainer]);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -103,10 +105,10 @@ export function Chat({
               id=""
               onChange={(e) => setFormSendMesage(Number(e.target.value))}
             >
-              <option value="2">ENTER</option>
-              <option value="1" selected>
-                Boton
+              <option value="2" selected>
+                ENTER
               </option>
+              <option value="1">Boton</option>
             </select>
           </div>
         </footer>

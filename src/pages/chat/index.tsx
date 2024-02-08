@@ -31,9 +31,6 @@ export default function ChatPage() {
     socket.on("server:loadmessages", (data) => {
       setMessages(data);
     });
-    const conversationContainer = document.querySelector(
-      ".messages-container :last-child"
-    );
   }, []);
 
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
