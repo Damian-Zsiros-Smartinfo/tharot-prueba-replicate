@@ -1,4 +1,5 @@
 import { Message } from "@/types/Message";
+import { timeAgo } from "@/utils/timeAgo";
 import { useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 
@@ -57,6 +58,9 @@ export function Chat({
             >
               <b>{message.actor == NameActor ? "Yo" : message.actor}</b>
               <p>{message.text}</p>
+              <b className="text-sm w-[100%] text-right">
+                {timeAgo(new Date(Date.parse(message.created_at || "")))}
+              </b>
             </article>
           ))}
         </section>
