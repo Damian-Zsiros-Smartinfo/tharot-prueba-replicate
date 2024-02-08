@@ -1,7 +1,9 @@
 import { Message } from "@/types/Message";
+import { hasDifferenceOfDateMore3Min } from "@/utils/differenceOfDateMore3Min";
 import { timeAgo } from "@/utils/timeAgo";
 import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
+import TrashIcon from "./icons/TrashIcon";
 
 export function Chat({
   NameActor,
@@ -44,13 +46,17 @@ export function Chat({
     }
   }, [Messages, refContainer]);
 
+  const onClickDeleteMessage = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {};
+
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
   return (
-    <main className="grid place-items-center gap-4 w-full min-h-[100vh]">
-      <section className="w-full max-w-[500px] text-center flex flex-col gap-4">
-        <header className="bg-blue-500 text-white w-full">
+    <main className="grid place-items-center gap-4 w-full min-h-[100vh] rounded-lg">
+      <section className="w-full max-w-[500px] text-center flex flex-col gap-4 rounded">
+        <header className="bg-blue-500 text-white w-full p-4 rounded">
           <h1 className="text-4xl font-bold">Chat</h1>
           <h2>
             Nombre actual en la sala: <b>{NameActor}</b>
@@ -63,15 +69,20 @@ export function Chat({
           {Messages.map((message) => (
             <article
               key={message.id}
-              className={`border p-2 rounded max-w-[70%] w-full ${
+              className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between ${
                 message.actor != NameActor ? "mr-auto" : "ml-auto"
               }`}
             >
-              <b>{message.actor == NameActor ? "Yo" : message.actor}</b>
-              <p>{message.text}</p>
-              <b className="text-sm w-[100%] text-right">
-                {timeAgo(new Date(Date.parse(message.created_at || "")))}
-              </b>
+              <div className="min-w-[80%]">
+                <b>{message.actor == NameActor ? "Yo" : message.actor}</b>
+                <p>{message.text}</p>
+                <b className="text-sm w-[100%] text-right">
+                  {timeAgo(new Date(Date.parse(message.created_at || "")))}
+                </b>
+              </div>
+              {!hasDifferenceOfDateMore3Min(
+                new Date(Date.parse(message.created_at || ""))
+              ) && <TrashIcon onClick={onClickDeleteMessage} />}
             </article>
           ))}
         </section>
