@@ -74,9 +74,11 @@ export function Chat({
               }`}
             >
               <div className="min-w-[80%]">
-                <b>{message.actor == NameActor ? "Yo" : message.actor}</b>
-                <p>{message.text}</p>
-                <b className="text-sm w-[100%] text-right">
+                <b className="text-[#3265b6] text-md opacity-90">
+                  {message.actor == NameActor ? "Yo" : message.actor}
+                </b>
+                <p className="text-lg">{message.text}</p>
+                <b className="text-xs w-[100%] text-right">
                   {timeAgo(new Date(Date.parse(message.created_at || "")))}
                 </b>
               </div>
