@@ -1,3 +1,4 @@
+import { constants } from "../../../constants";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 interface Message {
@@ -6,12 +7,12 @@ interface Message {
   text: string;
 }
 
-let socket = io("http://localhost:4000");
+let socket = io(constants.API_URL);
 
 function Chat({
   NameActor,
   Messages,
-  setMessages,
+  setMessages
 }: {
   NameActor: string;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
@@ -20,31 +21,20 @@ function Chat({
   const [Message, setMessage] = useState("");
   const messagesSectionRef = useRef(null);
 
-  const scrollToBottom = () => {
-    if(!messagesSectionRef.current) return
-    messagesSectionRef.current.scrollTop = messagesSectionRef.current.scrollHeight;
-  };
-
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const message = {
       id: crypto.randomUUID(),
       actor: NameActor,
-      text: Message.trim(),
-    }
+      text: Message.trim()
+    };
     setMessages([...Messages, message]);
     socket.emit("server:addMessage", {
       id: crypto.randomUUID(),
       text: Message,
-      actor: NameActor,
+      actor: NameActor
     });
-    scrollToBottom()
   };
 
-  useEffect(() => {
-    socket.on("messages", (data: any) => {
-      setMessages(data as Message[]);
-    });
-  }, []);
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
@@ -98,9 +88,11 @@ export default function ChatPage() {
   };
 
   const getMessages = () => {
-    fetch("http://localhost:4000/messages").then((res) => {
+    console.log(`${constants.API_URL}/messages`);
+    fetch(`${constants.API_URL}/messages`).then((res: Response) => {
       res.json().then((data) => {
         const { messages } = data;
+        console.log(data);
         setMessages(messages);
       });
     });
@@ -141,7 +133,7 @@ export default function ChatPage() {
         </>
       ) : (
         <Chat
-        Messages={Messages}
+          Messages={Messages}
           setMessages={setMessages}
           NameActor={NameActor}
         />
