@@ -15,8 +15,9 @@ export function Chat({
 }) {
   const [Message, setMessage] = useState("");
   const messagesSectionRef = useRef(null);
+  const [FormSendMesage, setFormSendMesage] = useState(1);
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const sendMessage = () => {
     const message = {
       id: crypto.randomUUID(),
       actor: NameActor,
@@ -28,6 +29,10 @@ export function Chat({
       text: Message,
       actor: NameActor
     });
+  };
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    sendMessage();
   };
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -60,14 +65,35 @@ export function Chat({
             onChange={(e) => onChange(e)}
             placeholder="Ingresa el mensaje"
             className="w-full border rounded outline-none p-4"
+            onKeyUp={async (e) => {
+              if (e.key === "Enter" && FormSendMesage != 1) {
+                await sendMessage();
+              }
+            }}
           ></textarea>
-          <button
-            type="button"
-            onClick={(e) => onClick(e)}
-            className="bg-blue-700 p-3 text-white rounded"
-          >
-            Enviar
-          </button>
+          {FormSendMesage == 1 && (
+            <button
+              type="button"
+              onClick={(e) => onClick(e)}
+              className="bg-blue-700 p-3 text-white rounded"
+            >
+              Enviar
+            </button>
+          )}
+          <div>
+            <span>Enviar con: </span>
+
+            <select
+              name="formAtSend"
+              id=""
+              onChange={(e) => setFormSendMesage(Number(e.target.value))}
+            >
+              <option value="2">ENTER</option>
+              <option value="1" selected>
+                Boton
+              </option>
+            </select>
+          </div>
         </footer>
       </section>
     </main>
