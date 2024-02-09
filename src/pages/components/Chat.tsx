@@ -5,13 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import EditIcon from "./icons/EditIcon";
 import MessageComponent from "./Message";
+import FileUpload from "./FileUpload";
 
 export function Chat({
   NameActor,
   Messages,
   setMessages,
   socket,
-  refContainer
+  refContainer,
 }: {
   NameActor: string;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
@@ -27,13 +28,13 @@ export function Chat({
     const message = {
       id: crypto.randomUUID(),
       actor: NameActor,
-      text: Message.trim()
+      text: Message.trim(),
     };
     setMessages([...Messages, message]);
     socket.emit("server:addMessage", {
       id: crypto.randomUUID(),
       text: Message,
-      actor: NameActor
+      actor: NameActor,
     });
   };
 
@@ -54,6 +55,7 @@ export function Chat({
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
+
   return (
     <main className="grid place-items-center gap-4 w-full min-h-[100vh] rounded-lg">
       <section className="w-full max-w-[500px] text-center flex flex-col gap-4 rounded">
@@ -89,6 +91,12 @@ export function Chat({
             }}
             value={Message}
           ></textarea>
+          <FileUpload
+            accept={{
+              "image/*": [".jpeg", ".png"],
+            }}
+          />
+
           {FormSendMesage == 1 && (
             <button
               type="button"
