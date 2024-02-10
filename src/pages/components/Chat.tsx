@@ -20,8 +20,8 @@ export function Chat({
   socket: Socket;
   refContainer: React.RefObject<HTMLElement>;
 }) {
+  const [images, setImages] = useState<{ file: { name: string }, arrayBuffer: Buffer }[]>([])
   const [Message, setMessage] = useState("");
-  const messagesSectionRef = useRef(null);
   const [FormSendMesage, setFormSendMesage] = useState(2);
 
   const sendMessage = () => {
@@ -29,13 +29,15 @@ export function Chat({
       id: crypto.randomUUID(),
       actor: NameActor,
       text: Message.trim(),
+      images
     };
-    setMessages([...Messages, message]);
-    socket.emit("server:addMessage", {
+    setMessages([...Messages, {
       id: crypto.randomUUID(),
-      text: Message,
       actor: NameActor,
-    });
+      text: Message.trim(),
+      images
+    }]);
+    socket.emit("server:addMessage", message);
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -50,7 +52,7 @@ export function Chat({
 
   const onClickDeleteMessage = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>
-  ) => {};
+  ) => { };
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -75,6 +77,7 @@ export function Chat({
               message={message}
               onClickDeleteMessage={onClickDeleteMessage}
               key={message.id}
+              images={Messages.images}
             />
           ))}
         </section>
@@ -92,6 +95,7 @@ export function Chat({
             value={Message}
           ></textarea>
           <FileUpload
+            setImages={setImages}
             accept={{
               "image/*": [".jpeg", ".png"],
             }}
