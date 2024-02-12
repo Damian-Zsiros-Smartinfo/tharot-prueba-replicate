@@ -1,3 +1,4 @@
+import { arrayBufferToBase64 } from "@/utils/arrayBufferToBase64";
 import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useDropzone, FileRejection, Accept, DropEvent } from "react-dropzone";
 
@@ -5,7 +6,11 @@ interface DropzoneProps {
   onDrop?: (acceptedFiles: File[], fileRejections: FileRejection[]) => void;
   accept?: Accept;
   open?: () => void;
-  setImages: Dispatch<SetStateAction<{ file: { name: string }, arrayBuffer: Buffer }[]>>
+  setImages: Dispatch<
+    SetStateAction<
+      { file: { name: string }; arrayBuffer: Buffer; image: string }[]
+    >
+  >;
 }
 async function convertFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
   return new Promise((resolve, reject) => {
@@ -15,12 +20,12 @@ async function convertFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
       if (reader.result instanceof ArrayBuffer) {
         resolve(reader.result);
       } else {
-        reject(new Error('Error al convertir el archivo a ArrayBuffer.'));
+        reject(new Error("Error al convertir el archivo a ArrayBuffer."));
       }
     };
 
     reader.onerror = () => {
-      reject(new Error('Error al leer el archivo.'));
+      reject(new Error("Error al leer el archivo."));
     };
 
     reader.readAsArrayBuffer(file);
@@ -29,22 +34,32 @@ async function convertFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
 const Dropzone: React.FC<DropzoneProps> = ({ setImages, accept, open }) => {
   const onDrop:
     | (<T extends File>(
-      acceptedFiles: T[],
-      fileRejections: FileRejection[],
-      event: DropEvent
-    ) => void)
+        acceptedFiles: T[],
+        fileRejections: FileRejection[],
+        event: DropEvent
+      ) => void)
     | undefined = (acceptedFiles) => {
-      acceptedFiles.forEach(async (file: File) => {
-        try {
-          const arrayBuffer = await convertFileToArrayBuffer(file);
-          const buffer = Buffer.from(arrayBuffer)
-          console.log({ file, buffer });
-          setImages(images => [...images, { file: { name: file.name }, arrayBuffer: buffer }])
-        } catch (error) {
-          console.error('Error al procesar el archivo:', error);
-        }
-      });
-    };
+    acceptedFiles.forEach(async (file: File) => {
+      try {
+        const arrayBuffer = await convertFileToArrayBuffer(file);
+        const buffer = Buffer.from(arrayBuffer);
+
+        const base64Image = await arrayBufferToBase64(buffer);
+        console.log(base64Image);
+        setImages((images) => [
+          ...images,
+          {
+            file: { name: file.name },
+            arrayBuffer: buffer,
+            image: base64Image,
+          },
+        ]);
+        console.log({ file, buffer });
+      } catch (error) {
+        console.error("Error al procesar el archivo:", error);
+      }
+    });
+  };
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
       accept: {

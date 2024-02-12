@@ -6,6 +6,7 @@ import { Socket } from "socket.io-client";
 import EditIcon from "./icons/EditIcon";
 import MessageComponent from "./Message";
 import FileUpload from "./FileUpload";
+import { constants } from "../../../constants";
 
 export function Chat({
   NameActor,
@@ -13,30 +14,46 @@ export function Chat({
   setMessages,
   socket,
   refContainer,
+  messageSelected,
+  setMessageSelected,
 }: {
   NameActor: string;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   Messages: Message[];
   socket: Socket;
   refContainer: React.RefObject<HTMLElement>;
+  messageSelected: Message;
+  setMessageSelected: React.Dispatch<React.SetStateAction<Message>>;
 }) {
-  const [images, setImages] = useState<{ file: { name: string }, arrayBuffer: Buffer }[]>([])
+  const [images, setImages] = useState<
+    { file: { name: string }; arrayBuffer: Buffer; image: string }[]
+  >([]);
   const [Message, setMessage] = useState("");
   const [FormSendMesage, setFormSendMesage] = useState(2);
 
   const sendMessage = () => {
     const message = {
-      id: crypto.randomUUID(),
       actor: NameActor,
       text: Message.trim(),
-      images
+      images,
     };
-    setMessages([...Messages, {
-      id: crypto.randomUUID(),
-      actor: NameActor,
-      text: Message.trim(),
-      images
-    }]);
+    console.log(message);
+    setMessages([
+      ...Messages,
+      {
+        id: "",
+        ...message,
+      },
+    ]);
+
+    fetch(`${constants.API_URL}/messages`, {
+      method: "POST",
+      body: JSON.stringify(message),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        return console.log(data);
+      });
     socket.emit("server:addMessage", message);
   };
 
@@ -50,10 +67,28 @@ export function Chat({
     }
   }, [Messages, refContainer]);
 
-  const onClickDeleteMessage = (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>
-  ) => { };
+  const onClickDeleteMessage = (e: React.MouseEvent<SVGSVGElement>) => {
+    const { parentElement } = e.target as SVGSVGElement;
+    const inputElement = parentElement?.querySelector("input");
 
+    if (inputElement) {
+      inputElement.focus();
+    } else {
+      console.error("No se encontró un input dentro del padre.");
+    }
+  };
+  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter") {
+      console.log("Se presionó la tecla Enter");
+      console.log(messageSelected);
+      socket.emit("server:editMessage", {
+        messageId: messageSelected.id,
+        messageEdited: messageSelected.text,
+      });
+    }
+  };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
@@ -75,9 +110,12 @@ export function Chat({
             <MessageComponent
               NameActor={NameActor}
               message={message}
+              handleKeyPress={handleKeyPress}
               onClickDeleteMessage={onClickDeleteMessage}
               key={message.id}
-              images={Messages.images}
+              images={message.images || []}
+              messageSelected={messageSelected}
+              setMessageSelected={setMessageSelected}
             />
           ))}
         </section>
@@ -88,6 +126,7 @@ export function Chat({
             className="w-full border rounded outline-none p-4"
             onKeyUp={async (e) => {
               if (e.key === "Enter" && FormSendMesage != 1) {
+                console.log(Message);
                 await sendMessage();
                 setMessage("");
               }
