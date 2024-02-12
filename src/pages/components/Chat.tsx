@@ -32,10 +32,12 @@ export function Chat({
   const [FormSendMesage, setFormSendMesage] = useState(2);
 
   const sendMessage = () => {
+    const dateStringNow = new Date().toString();
     const message = {
       actor: NameActor,
       text: Message.trim(),
       images,
+      created_at: dateStringNow || "",
     };
     console.log(message);
     setMessages([
@@ -117,7 +119,7 @@ export function Chat({
           ref={refContainer}
           className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container px-4"
         >
-          {Messages.map((message) => (
+          {Messages?.map((message) => (
             <MessageComponent
               NameActor={NameActor}
               message={message}

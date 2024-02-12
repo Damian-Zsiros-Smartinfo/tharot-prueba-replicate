@@ -1,23 +1,33 @@
-export function timeAgo(date: Date): string | undefined {
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
+export function timeAgo(postgresTimestamp: string): string {
+  const currentDate = new Date();
+  const timestampDate = new Date(postgresTimestamp);
 
-  const timeUnits: { value: number; unit: string }[] = [
-    { value: days, unit: "día" },
-    { value: hours, unit: "hora" },
-    { value: minutes, unit: "minuto" },
-    { value: seconds, unit: "segundo" }
-  ];
+  const timeDifferenceInSeconds = Math.floor((currentDate.getTime() - timestampDate.getTime()) / 1000);
 
-  for (const { value, unit } of timeUnits) {
-    if (value > 0) {
-      return value === 1 ? `hace un ${unit}` : `hace ${value} ${unit}s`;
-    }
+  const intervals = {
+      año: 31536000,
+      mes: 2592000,
+      día: 86400,
+      hora: 3600,
+      minuto: 60,
+      segundo: 1,
+  };
+
+  let elapsedTime = 0;
+  let unit = "";
+
+  for (const [intervalUnit, secondsInInterval] of Object.entries(intervals)) {
+      elapsedTime = Math.floor(timeDifferenceInSeconds / secondsInInterval);
+
+      if (elapsedTime >= 1) {
+          unit = intervalUnit;
+          break;
+      }
   }
 
-  return "hace un momento";
+  if (elapsedTime > 1) {
+      unit += "s";
+  }
+
+  return `${elapsedTime} ${unit} ago`;
 }

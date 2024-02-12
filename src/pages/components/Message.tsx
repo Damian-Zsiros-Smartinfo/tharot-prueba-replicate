@@ -55,7 +55,6 @@ export default function MessageComponent({
       }) || []
     );
   }
-
   const onChangeMessageEdit: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
@@ -65,7 +64,6 @@ export default function MessageComponent({
     });
     if (message.text == messageSelected.text) return;
   };
-
   return (
     <article
       key={message.id}
@@ -100,7 +98,7 @@ export default function MessageComponent({
             }
           />
           <b className="text-xs w-[100%] text-right opacity-70">
-            {timeAgo(new Date(Date.parse(message.created_at || "")))}
+            {timeAgo(message.created_at || "")}
           </b>
         </div>
         <div className="flex gap-4 p-4 flex-wrap justify-center">

@@ -20,7 +20,6 @@ export default function ChatPage() {
     created_at: "",
     images: [],
   });
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameActor(e.target.value);
   };
@@ -36,7 +35,6 @@ export default function ChatPage() {
 
   useEffect(() => {
     socket.on("server:loadmessages", (data) => {
-      console.log(data);
       return setMessages(data);
     });
   }, []);
