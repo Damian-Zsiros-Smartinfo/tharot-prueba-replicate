@@ -87,6 +87,17 @@ export function Chat({
         messageId: messageSelected.id,
         messageEdited: messageSelected.text,
       });
+      setMessages(
+        Messages.map((message) => {
+          if (message.id == messageSelected.id) {
+            return {
+              ...message,
+              text: messageSelected.text,
+            };
+          }
+          return message;
+        })
+      );
     }
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

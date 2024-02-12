@@ -64,7 +64,6 @@ export default function MessageComponent({
       text: e.target.value,
     });
     if (message.text == messageSelected.text) return;
-    console.log(messageSelected);
   };
 
   return (
