@@ -7,10 +7,10 @@ interface Props {
   onClick?: (i: number) => void;
 }
 
-export default function CloseIcon({ color = "#ffffff" }: Props) {
+export default function CloseIcon({ color = "#000000" }: Props) {
   return (
     <svg
-      className="opacity-50 hover:opacity-100"
+      className="opacity-90 hover:opacity-100"
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}

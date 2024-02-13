@@ -34,7 +34,16 @@ export function Chat({
   const [Message, setMessage] = useState("");
   const [FormSendMesage, setFormSendMesage] = useState(2);
 
-  const sendMessage = () => {
+  const getMessages = () => {
+    fetch(`${constants.API_URL}/messages`).then((res: Response) => {
+      res.json().then((data) => {
+        const { messages } = data;
+        setMessages(messages);
+      });
+    });
+  };
+
+  const sendMessage = async () => {
     const dateStringNow = new Date().toString();
     const message = {
       actor: NameActor,
@@ -49,22 +58,28 @@ export function Chat({
         ...message,
       },
     ]);
-
-    fetch(`${constants.API_URL}/messages`, {
-      method: "POST",
-      body: JSON.stringify(message),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        return console.log(data);
-      });
     socket.emit("server:addMessage", message);
+  };
+
+  const deleteMessage = (id: string) => {
+    setMessages(
+      Messages.filter((message) => {
+        if (message.id == id) return;
+        return message;
+      })
+    );
+    socket.emit("server:deleteMessage", id);
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     sendMessage();
     setMessage("");
   };
+
+  const onClickDelete = async (id: string) => {
+    await deleteMessage(id);
+  };
+
   useEffect(() => {
     if (refContainer.current) {
       refContainer.current.scrollTop = refContainer.current.scrollHeight;
@@ -128,6 +143,7 @@ export function Chat({
           >
             {Messages?.map((message) => (
               <MessageComponent
+                onClickDelete={onClickDelete}
                 NameActor={NameActor}
                 message={message}
                 handleKeyPress={handleKeyPress}

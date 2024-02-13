@@ -5,6 +5,8 @@ import { timeAgo } from "@/utils/timeAgo";
 import { Image, Message } from "@/types/Message";
 import ImageComponent from "next/image";
 import GalleryImage from "./GalleryImage";
+import CloseIcon from "./icons/CloseIcon";
+import DeleteIcon from "./icons/DeleteIcon";
 
 interface Props {
   message: Message;
@@ -24,6 +26,7 @@ interface Props {
       }[];
   messageSelected: Message;
   setMessageSelected: React.Dispatch<React.SetStateAction<Message>>;
+  onClickDelete: (id: string) => void;
 }
 
 export default function MessageComponent({
@@ -32,8 +35,9 @@ export default function MessageComponent({
   messageSelected,
   setMessageSelected,
   handleKeyPress,
+  onClickDelete,
 }: Props) {
-  const onClickDeleteMessage = (e: React.MouseEvent<SVGSVGElement>) => {
+  const onClickEditMessage = (e: React.MouseEvent<SVGSVGElement>) => {
     const { parentElement } = e.target as SVGSVGElement;
     const inputElement = parentElement?.querySelector("input");
 
@@ -44,6 +48,7 @@ export default function MessageComponent({
       console.error("No se encontró un input dentro del padre.");
     }
   };
+  const onClickDeleteMessage = (e: React.MouseEvent<SVGSVGElement>) => {};
 
   function imagesToGallery(message: Message) {
     return (
@@ -58,7 +63,7 @@ export default function MessageComponent({
   const onChangeMessageEdit: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
-    console.log(message)
+    console.log(message);
     setMessageSelected({
       ...message,
       text: e.target.value,
@@ -68,7 +73,7 @@ export default function MessageComponent({
   return (
     <article
       key={message.id}
-      className={`border p-2 rounded max-w-[70%] w-full flex gap-5 justify-between scale-100  transition ${
+      className={`border p-2 rounded w-full flex gap-5 justify-between scale-100  transition max-w-[80%] flex-col ${
         message.actor != NameActor ? "mr-auto" : "ml-auto"
       }`}
     >
@@ -111,9 +116,13 @@ export default function MessageComponent({
         </div>
       </div>
 
-      {!hasDifferenceOfDateMore3Min(
-        new Date(Date.parse(message.created_at || ""))
-      ) && <EditIcon onClick={onClickDeleteMessage} />}
+      {!hasDifferenceOfDateMore3Min(message.created_at || "") &&
+      message.actor == NameActor ? (
+        <div className="flex items-center h-full justify-center gap-4">
+          <EditIcon onClick={onClickEditMessage} />
+          <DeleteIcon onClick={() => onClickDelete(message.id)} />
+        </div>
+      ) : null}
     </article>
   );
 }

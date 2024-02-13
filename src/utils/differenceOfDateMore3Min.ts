@@ -1,9 +1,14 @@
-export function hasDifferenceOfDateMore3Min(desdeFecha: Date): boolean {
+import moment from "moment";
+
+export function hasDifferenceOfDateMore3Min(desdeFecha: string): boolean {
   const ahora = new Date();
 
-  const diferenciaEnMilisegundos = ahora.getTime() - desdeFecha.getTime();
+  const fecha1 = moment(new Date());
+  const fecha2 = moment(desdeFecha);
 
-  const diferenciaEnMinutos = diferenciaEnMilisegundos / (1000 * 60);
+  const diferenciaEnMinutos = fecha2.diff(fecha1, "minutes");
+
+  console.log(diferenciaEnMinutos);
 
   return diferenciaEnMinutos > 3;
 }

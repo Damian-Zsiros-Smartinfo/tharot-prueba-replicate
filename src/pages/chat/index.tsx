@@ -41,6 +41,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     socket.on("server:loadmessages", (data) => {
+      console.log(data);
       return setMessages(data);
     });
     getMessages();
