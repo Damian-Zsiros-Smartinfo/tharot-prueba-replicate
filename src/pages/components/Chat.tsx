@@ -8,6 +8,7 @@ import MessageComponent from "./Message";
 import FileUpload from "./FileUpload";
 import { constants } from "../../../constants";
 import { Toaster, toast } from "sonner";
+import UploadIcon from "./icons/UploadIcon";
 
 export function Chat({
   NameActor,
@@ -33,15 +34,7 @@ export function Chat({
   >([]);
   const [Message, setMessage] = useState("");
   const [FormSendMesage, setFormSendMesage] = useState(2);
-
-  const getMessages = () => {
-    fetch(`${constants.API_URL}/messages`).then((res: Response) => {
-      res.json().then((data) => {
-        const { messages } = data;
-        setMessages(messages);
-      });
-    });
-  };
+  const [isVisibleUploadImages, setisVisibleUploadImages] = useState(false);
 
   const sendMessage = async () => {
     const dateStringNow = new Date().toString();
@@ -156,7 +149,15 @@ export function Chat({
             ))}
           </section>
         )}
-        <footer>
+        <footer className="border-t-2">
+          <div className="flex justify-center gap-3 my-3 ">
+            <UploadIcon
+              title="Subir imagenes"
+              onClick={() => {
+                setisVisibleUploadImages(!isVisibleUploadImages);
+              }}
+            />
+          </div>
           <textarea
             onChange={(e) => onChange(e)}
             placeholder="Ingresa el mensaje"
@@ -170,12 +171,14 @@ export function Chat({
             }}
             value={Message}
           ></textarea>
-          <FileUpload
-            setImages={setImages}
-            accept={{
-              "image/*": [".jpeg", ".png"],
-            }}
-          />
+          {isVisibleUploadImages && (
+            <FileUpload
+              setImages={setImages}
+              accept={{
+                "image/*": [".jpeg", ".png"],
+              }}
+            />
+          )}
 
           {FormSendMesage == 1 && (
             <button
