@@ -30,9 +30,19 @@ interface Props {
 }
 
 export default function MessageComponent({
-  message,
-  NameActor,
-  messageSelected,
+  message = {
+    id: "",
+    actor: "",
+    text: "",
+    created_at: "",
+  },
+  NameActor = "",
+  messageSelected = {
+    id: "",
+    actor: "",
+    text: "",
+    created_at: "",
+  },
   setMessageSelected,
   handleKeyPress,
   onClickDelete,

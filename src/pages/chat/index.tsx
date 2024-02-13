@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import JoinPersonAtChatForm from "../components/JoinPersonAtChatForm";
 import { Message } from "@/types/Message";
-import { Chat } from "../components/Chat";
+import Chat from "../components/Chat";
 import { Toaster } from "sonner";
 
 const socket = io(constants.API_URL);

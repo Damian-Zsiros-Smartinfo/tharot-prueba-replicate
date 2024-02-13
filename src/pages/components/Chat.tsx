@@ -10,7 +10,7 @@ import { constants } from "../../../constants";
 import { Toaster, toast } from "sonner";
 import UploadIcon from "./icons/UploadIcon";
 
-export function Chat({
+export default function Chat({
   NameActor,
   Messages,
   setMessages,

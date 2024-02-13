@@ -9,7 +9,7 @@ interface Props {
   }[];
 }
 
-const GalleryImage = ({ images }: Props) => {
+const GalleryImage = ({ images = [] }: Props) => {
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
