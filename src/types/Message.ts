@@ -1,5 +1,5 @@
 export interface Message {
-  id: string;
+  id: number;
   actor: string;
   text: string;
   created_at?: string;
@@ -17,7 +17,7 @@ export interface Message {
 }
 
 export interface Image {
-  id: string;
+  id: number;
   link_image: string;
   image?: string;
   id_message: string;

@@ -47,7 +47,7 @@ export default function Chat({
     setMessages([
       ...Messages,
       {
-        id: "",
+        id: 0,
         ...message,
       },
     ]);
@@ -57,7 +57,7 @@ export default function Chat({
   const deleteMessage = (id: string) => {
     setMessages(
       Messages.filter((message) => {
-        if (message.id == id) return;
+        if (message.id == parseInt(id)) return;
         return message;
       })
     );
@@ -94,6 +94,7 @@ export default function Chat({
     event
   ) => {
     if (event.key === "Enter") {
+      console.log(messageSelected);
       socket.emit("server:editMessage", {
         messageId: messageSelected.id,
         messageEdited: messageSelected.text,

@@ -23,8 +23,9 @@ const GalleryImage = ({ images = [] }: Props) => {
   };
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <ImageGallery
+        additionalClass="w-[300px] h-[300px] object-cover object-center"
         items={images}
         autoPlay
         lazyLoad

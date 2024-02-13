@@ -31,14 +31,14 @@ interface Props {
 
 export default function MessageComponent({
   message = {
-    id: "",
+    id: 0,
     actor: "",
     text: "",
     created_at: "",
   },
   NameActor = "",
   messageSelected = {
-    id: "",
+    id: 0,
     actor: "",
     text: "",
     created_at: "",
@@ -48,8 +48,9 @@ export default function MessageComponent({
   onClickDelete,
 }: Props) {
   const onClickEditMessage = (e: React.MouseEvent<SVGSVGElement>) => {
-    const { parentElement } = e.target as SVGSVGElement;
-    const inputElement = parentElement?.querySelector("input");
+    const element = e.target as SVGSVGElement;
+    const inputElement =
+      element.parentElement?.parentElement?.querySelector("input");
 
     if (inputElement) {
       inputElement.disabled = false;
@@ -108,10 +109,7 @@ export default function MessageComponent({
             }
             onChange={onChangeMessageEdit}
             className="text-lg transition w-full text-center"
-            disabled={
-              messageSelected.id == message.id &&
-              message.actor == messageSelected.actor
-            }
+            disabled={message.actor == messageSelected.actor}
           />
           <b className="text-xs w-[100%] text-right opacity-70">
             {timeAgo(message.created_at || "")}
@@ -130,7 +128,7 @@ export default function MessageComponent({
       message.actor == NameActor ? (
         <div className="flex items-center h-full justify-center gap-4">
           <EditIcon onClick={onClickEditMessage} />
-          <DeleteIcon onClick={() => onClickDelete(message.id)} />
+          <DeleteIcon onClick={() => onClickDelete(message.id + "")} />
         </div>
       ) : null}
     </article>

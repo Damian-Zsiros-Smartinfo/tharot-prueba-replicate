@@ -16,7 +16,7 @@ export default function ChatPage() {
   const chatContainerRef = useRef<HTMLElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [messageSelected, setMessageSelected] = useState<Message>({
-    id: "",
+    id: 0,
     actor: "",
     text: "",
     created_at: "",
@@ -30,10 +30,11 @@ export default function ChatPage() {
     setIsLoading(true);
     fetch(`${constants.API_URL}/messages`)
       .then((res: Response) => {
-        res.json().then((data) => {
+        res.json().then((data: any) => {
           const { messages } = data;
-          setMessages(messages);
+          console.log(data);
           setIsLoading(false);
+          setMessages(messages);
         });
       })
       .catch((err) => setIsLoading(false));
@@ -41,11 +42,9 @@ export default function ChatPage() {
 
   useEffect(() => {
     socket.on("server:loadmessages", (data) => {
-      console.log(data);
       return setMessages(data);
     });
-    getMessages();
-  }, []);
+  }, [Messages]);
 
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     await getMessages();
