@@ -54,13 +54,26 @@ export default function ChatPage() {
     sethasChange(true);
   };
 
+  const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      await getMessages();
+      if (NameActor == "") return;
+      setNameObtained(true);
+      sethasChange(true);
+    }
+  };
+
   const onEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {};
 
   return (
     <>
       <Toaster />
       {!NameObtained ? (
-        <JoinPersonAtChatForm onChange={onChange} onClick={onClick} />
+        <JoinPersonAtChatForm
+          onChange={onChange}
+          onClick={onClick}
+          onKeyDown={onKeyDown}
+        />
       ) : (
         <Chat
           isLoading={isLoading}
