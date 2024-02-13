@@ -7,6 +7,7 @@ import EditIcon from "./icons/EditIcon";
 import MessageComponent from "./Message";
 import FileUpload from "./FileUpload";
 import { constants } from "../../../constants";
+import { Toaster, toast } from "sonner";
 
 export function Chat({
   NameActor,
@@ -16,6 +17,7 @@ export function Chat({
   refContainer,
   messageSelected,
   setMessageSelected,
+  isLoading,
 }: {
   NameActor: string;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
@@ -24,6 +26,7 @@ export function Chat({
   refContainer: React.RefObject<HTMLElement>;
   messageSelected: Message;
   setMessageSelected: React.Dispatch<React.SetStateAction<Message>>;
+  isLoading: boolean;
 }) {
   const [images, setImages] = useState<
     { file: { name: string }; arrayBuffer: Buffer; image: string }[]
@@ -39,7 +42,6 @@ export function Chat({
       images,
       created_at: dateStringNow || "",
     };
-    console.log(message);
     setMessages([
       ...Messages,
       {
@@ -74,6 +76,7 @@ export function Chat({
     const inputElement = parentElement?.querySelector("input");
 
     if (inputElement) {
+      toast("Escribe en el input el mensaje editado");
       inputElement.focus();
     } else {
       console.error("No se encontró un input dentro del padre.");
@@ -83,8 +86,6 @@ export function Chat({
     event
   ) => {
     if (event.key === "Enter") {
-      console.log("Se presionó la tecla Enter");
-      console.log(messageSelected);
       socket.emit("server:editMessage", {
         messageId: messageSelected.id,
         messageEdited: messageSelected.text,
@@ -100,6 +101,7 @@ export function Chat({
           return message;
         })
       );
+      toast("Mensaje editado correctamente");
     }
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -115,23 +117,29 @@ export function Chat({
             Nombre actual en la sala: <b>{NameActor}</b>
           </h2>
         </header>
-        <section
-          ref={refContainer}
-          className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container px-4"
-        >
-          {Messages?.map((message) => (
-            <MessageComponent
-              NameActor={NameActor}
-              message={message}
-              handleKeyPress={handleKeyPress}
-              onClickDeleteMessage={onClickDeleteMessage}
-              key={message.id}
-              images={message.images || []}
-              messageSelected={messageSelected}
-              setMessageSelected={setMessageSelected}
-            />
-          ))}
-        </section>
+        {isLoading ? (
+          <>
+            <span>Obteniendo mensajes del chat...</span>
+          </>
+        ) : (
+          <section
+            ref={refContainer}
+            className="flex flex-col gap-2 overflow-y-scroll max-h-[50vh]   overflow: auto; messages-container px-4"
+          >
+            {Messages?.map((message) => (
+              <MessageComponent
+                NameActor={NameActor}
+                message={message}
+                handleKeyPress={handleKeyPress}
+                onClickDeleteMessage={onClickDeleteMessage}
+                key={message.id}
+                images={message.images || []}
+                messageSelected={messageSelected}
+                setMessageSelected={setMessageSelected}
+              />
+            ))}
+          </section>
+        )}
         <footer>
           <textarea
             onChange={(e) => onChange(e)}

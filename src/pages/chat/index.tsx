@@ -4,6 +4,7 @@ import { Socket, io } from "socket.io-client";
 import JoinPersonAtChatForm from "../components/JoinPersonAtChatForm";
 import { Message } from "@/types/Message";
 import { Chat } from "../components/Chat";
+import { Toaster } from "sonner";
 
 const socket = io(constants.API_URL);
 
@@ -13,6 +14,7 @@ export default function ChatPage() {
   const [, sethasChange] = useState(false);
   const [Messages, setMessages] = useState<Message[]>([]);
   const chatContainerRef = useRef<HTMLElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [messageSelected, setMessageSelected] = useState<Message>({
     id: "",
     actor: "",
@@ -25,23 +27,28 @@ export default function ChatPage() {
   };
 
   const getMessages = () => {
-    fetch(`${constants.API_URL}/messages`).then((res: Response) => {
-      res.json().then((data) => {
-        const { messages } = data;
-        setMessages(messages);
-      });
-    });
+    setIsLoading(true);
+    fetch(`${constants.API_URL}/messages`)
+      .then((res: Response) => {
+        res.json().then((data) => {
+          const { messages } = data;
+          setMessages(messages);
+          setIsLoading(false);
+        });
+      })
+      .catch((err) => setIsLoading(false));
   };
 
   useEffect(() => {
     socket.on("server:loadmessages", (data) => {
       return setMessages(data);
     });
+    getMessages();
   }, []);
 
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (NameActor == "") return;
     await getMessages();
+    if (NameActor == "") return;
     setNameObtained(true);
     sethasChange(true);
   };
@@ -50,10 +57,12 @@ export default function ChatPage() {
 
   return (
     <>
+      <Toaster />
       {!NameObtained ? (
         <JoinPersonAtChatForm onChange={onChange} onClick={onClick} />
       ) : (
         <Chat
+          isLoading={isLoading}
           refContainer={chatContainerRef}
           socket={socket}
           Messages={Messages}

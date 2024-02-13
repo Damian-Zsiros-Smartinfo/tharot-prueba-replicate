@@ -58,6 +58,7 @@ export default function MessageComponent({
   const onChangeMessageEdit: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
+    console.log(message)
     setMessageSelected({
       ...message,
       text: e.target.value,
