@@ -29,24 +29,6 @@ export default function ChatPage() {
     setNameActor(e.target.value);
   };
 
-  const router = useRouter();
-  useEffect(() => {
-    if (!router) return;
-    const token = getCookie("token") as string;
-    if (!token) router.push("/");
-    fetch(`/api/validate-token`, {
-      method: "POST",
-      body: JSON.stringify({
-        token,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const { valid } = data;
-        if (!valid) router.push("/");
-      });
-  }, [router]);
-
   const getMessages = () => {
     setIsLoading(true);
     fetch(`${constants.API_URL}/messages`)
