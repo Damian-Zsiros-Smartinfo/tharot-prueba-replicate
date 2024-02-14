@@ -1,0 +1,36 @@
+/** @format */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slide-right-animate {
+  transform: translateX(0);
+  width: 300px;
+  animation: animationRight 500ms ease;
+}
+
+.slide-left-animate {
+  transform: translateX(-300px);
+  width: 0;
+  animation: animationLeft 500ms ease;
+}
+
+@keyframes animationLeft {
+  from {
+    width: 300px;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+@keyframes animationRight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 300px;
+  }
+}

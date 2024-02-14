@@ -1,5 +1,5 @@
 import { hasDifferenceOfDateMore3Min } from "@/utils/differenceOfDateMore3Min";
-import React from "react";
+import React, { useState } from "react";
 import EditIcon from "./icons/EditIcon";
 import { timeAgo } from "@/utils/timeAgo";
 import { Image, Message } from "@/types/Message";
@@ -7,6 +7,7 @@ import ImageComponent from "next/image";
 import GalleryImage from "./GalleryImage";
 import CloseIcon from "./icons/CloseIcon";
 import DeleteIcon from "./icons/DeleteIcon";
+import ImageNext from "next/image";
 
 interface Props {
   message: Message;
@@ -47,6 +48,7 @@ export default function MessageComponent({
   handleKeyPress,
   onClickDelete,
 }: Props) {
+  const [isVisibleGallery, setisVisibleGallery] = useState(false);
   const onClickEditMessage = (e: React.MouseEvent<SVGSVGElement>) => {
     const element = e.target as SVGSVGElement;
     const inputElement =
@@ -59,7 +61,6 @@ export default function MessageComponent({
       console.error("No se encontró un input dentro del padre.");
     }
   };
-  const onClickDeleteMessage = (e: React.MouseEvent<SVGSVGElement>) => {};
 
   function imagesToGallery(message: Message) {
     return (
@@ -118,7 +119,33 @@ export default function MessageComponent({
         <div className="flex gap-4 p-4 flex-wrap justify-center">
           {message.images && message.images.length > 0 ? (
             <>
-              <GalleryImage images={imagesToGallery(message)} />
+              {isVisibleGallery ? (
+                <GalleryImage images={imagesToGallery(message)}></GalleryImage>
+              ) : (
+                <section className="flex gap-4 justify-center">
+                  {message.images && message.images.length > 0
+                    ? message.images.map((image, i) => {
+                        if (i > 4) return null;
+                        return (
+                          <>
+                            <ImageNext
+                              src={image.image || ""}
+                              alt={message.actor}
+                              width={50}
+                              height={50}
+                            />
+                          </>
+                        );
+                      })
+                    : null}
+                  <button
+                    onClick={() => setisVisibleGallery(!isVisibleGallery)}
+                    className="h-full flex justify-center items-center border px-4"
+                  >
+                    +{message.images.length - 4}
+                  </button>
+                </section>
+              )}
             </>
           ) : null}
         </div>

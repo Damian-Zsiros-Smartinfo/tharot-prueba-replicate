@@ -17,7 +17,7 @@ export interface Message {
 }
 
 export interface Image {
-  id: number;
+  id?: number;
   link_image: string;
   image?: string;
   id_message: string;

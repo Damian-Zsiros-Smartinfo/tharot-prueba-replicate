@@ -7,13 +7,20 @@ import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { NavigationBar } from "@/interfaces/NavigationBar";
 
 interface Props extends NavigationBar {
+  tabs: {
+    text: string;
+    nameFile: string;
+    fixed: boolean;
+    link: string;
+  }[];
+  activeIndex: number;
   activeFileComponent: string;
   setActiveFileComponent: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function TabsLayout({
   activeFileComponent,
-  setActiveFileComponent
+  setActiveFileComponent,
 }: Props) {
   const tabs = useAppSelector((state) => state.tabsReducer.tabs);
   const activeIndex = useAppSelector((state) => state.tabsReducer.activeTab);
