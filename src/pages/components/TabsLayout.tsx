@@ -6,13 +6,8 @@ import { changeActiveTab, closeTab } from "@/redux/features/tabsSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { NavigationBar } from "@/interfaces/NavigationBar";
 
-interface Props extends NavigationBar {
-  tabs: {
-    text: string;
-    nameFile: string;
-    fixed: boolean;
-    link: string;
-  }[];
+interface Props {
+  tabs: NavigationBar[];
   activeIndex: number;
   activeFileComponent: string;
   setActiveFileComponent: React.Dispatch<React.SetStateAction<string>>;
