@@ -20,7 +20,7 @@ export interface Props {
 const LateralMenu: React.FC<Props> = ({
   visible,
   changeVisibleMenu,
-  setActiveFileComponent
+  setActiveFileComponent,
 }) => {
   const [isPrimaryMenu, setIsPrimaryMenu] = useState(true);
   const [childrensLink, setChildrensLink] = useState<Link[]>([]);
@@ -31,7 +31,7 @@ const LateralMenu: React.FC<Props> = ({
     setChildrensLink(childrens);
   };
 
-  const handleAddTab = (info: Tab) => {
+  const handleAddTab = (info: any) => {
     dispatch(addTab(info));
     if (setActiveFileComponent) {
       setActiveFileComponent(info.component ?? "HomeTab.tsx");
@@ -42,7 +42,7 @@ const LateralMenu: React.FC<Props> = ({
     <aside
       className={`bg-[#fc246c] flex flex-col h-[90vh] xl:h-[93vh] max-xl:h-[100vh] ${
         !visible ? "slide-right-animate px-4" : "slide-left-animate "
-      }  w-[300px]  transition duration-500	 min-h-[90vh] `}
+      }  w-[300px]  transition duration-500	 min-h-[90vh] h-auto `}
     >
       <header className="flex justify-end mb-3">
         <button

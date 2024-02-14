@@ -1,3 +1,4 @@
+"use client";
 import React, { ChangeEvent } from "react";
 
 interface Props {
@@ -12,7 +13,7 @@ export default function JoinPersonAtChatForm({
   onKeyDown,
 }: Props) {
   return (
-    <main className="grid place-items-center gap-4 w-full min-h-[100vh]">
+    <main className="grid place-items-center gap-4 w-full min-h-[70vh]">
       <section className="w-full max-w-[500px] text-center flex flex-col gap-4">
         <header className="bg-blue-500 text-white w-full py-4">
           <h1 className="text-4xl font-bold">Ingreso al Chat</h1>

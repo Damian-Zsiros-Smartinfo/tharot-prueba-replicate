@@ -38,7 +38,7 @@ export default function TabsLayout({
   };
 
   return (
-    <section className="w-full min-h-[94vh] bg-gray-500 py-12  grid place-items-center">
+    <section className="w-full min-h-[93vh] bg-gray-500 py-12  grid place-items-center">
       <section className="max-w-[90%] overflow-auto w-full h-full  bg-white rounded-lg ">
         <header className="h-[60px]  bg-gray-50 ">
           <ul className="flex gap-1 items-center overflow-x-auto overflow-y-hidden">

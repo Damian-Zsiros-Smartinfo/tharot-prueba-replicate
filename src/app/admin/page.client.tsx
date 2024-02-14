@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import Layout from "../../pages/components/Layout";
-import TabsLayout from "../../pages/components/TabsLayout";
+import Layout from "../components/Layout";
+import TabsLayout from "../components/TabsLayout";
 import { useAppSelector } from "@/redux/features/hooks";
 import Providers from "@/redux/providers";
 import Head from "next/head";

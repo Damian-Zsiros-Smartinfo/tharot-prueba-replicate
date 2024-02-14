@@ -1,6 +1,8 @@
+"use client";
 import { Message } from "@/types/Message";
 import { hasDifferenceOfDateMore3Min } from "@/utils/differenceOfDateMore3Min";
 import { timeAgo } from "@/utils/timeAgo";
+
 import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import EditIcon from "./icons/EditIcon";

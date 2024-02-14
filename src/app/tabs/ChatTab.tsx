@@ -1,3 +1,4 @@
+"use client";
 import { constants } from "../../../constants";
 import React, { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
@@ -5,6 +6,8 @@ import JoinPersonAtChatForm from "../components/JoinPersonAtChatForm";
 import { Message } from "@/types/Message";
 import Chat from "../components/Chat";
 import { Toaster } from "sonner";
+import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 const socket = io(constants.API_URL);
 
@@ -25,6 +28,24 @@ export default function ChatPage() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameActor(e.target.value);
   };
+
+  const router = useRouter();
+  useEffect(() => {
+    if (!router) return;
+    const token = getCookie("token") as string;
+    if (!token) router.push("/");
+    fetch(`/api/validate-token`, {
+      method: "POST",
+      body: JSON.stringify({
+        token,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const { valid } = data;
+        if (!valid) router.push("/");
+      });
+  }, [router]);
 
   const getMessages = () => {
     setIsLoading(true);

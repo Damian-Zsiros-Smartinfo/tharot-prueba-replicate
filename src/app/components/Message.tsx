@@ -1,3 +1,4 @@
+"use client";
 import { hasDifferenceOfDateMore3Min } from "@/utils/differenceOfDateMore3Min";
 import React, { useState } from "react";
 import EditIcon from "./icons/EditIcon";

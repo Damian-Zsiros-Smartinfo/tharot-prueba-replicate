@@ -8,14 +8,14 @@ export const linksLateralMenu = [
       {
         text: "Ingresar",
         link: "/usuarios/ingresar",
-        component: "Home7Tab.tsx"
+        component: "Home7Tab.tsx",
       },
       {
         text: "Adminsitrar",
         link: "/usuarios/administrar",
-        component: "Home2Tab.tsx"
-      }
-    ]
+        component: "Home2Tab.tsx",
+      },
+    ],
   },
   {
     text: "Clientes",
@@ -24,14 +24,25 @@ export const linksLateralMenu = [
       {
         text: "Ingresar",
         link: "/clientes/ingresar",
-        component: "Home3Tab.tsx"
+        component: "Home3Tab.tsx",
       },
       {
         text: "Adminsitrar",
         link: "/clientes/administrar",
-        component: "Home6Tab.tsx"
-      }
-    ]
+        component: "Home6Tab.tsx",
+      },
+    ],
+  },
+  {
+    text: "Chat",
+    link: "/chat",
+    childrens: [
+      {
+        text: "Chat",
+        link: "/chat/page",
+        component: "ChatTab.tsx",
+      },
+    ],
   },
   {
     text: "Usuarios",
@@ -40,13 +51,13 @@ export const linksLateralMenu = [
       {
         text: "Ingresar",
         link: "/clientes/ingresar",
-        component: "Home4Tab.tsx"
+        component: "Home4Tab.tsx",
       },
       {
         text: "Adminsitrar",
         link: "/proveedores/administrar",
-        component: "Home5Tab.tsx"
-      }
-    ]
-  }
+        component: "Home5Tab.tsx",
+      },
+    ],
+  },
 ];

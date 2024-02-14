@@ -1,19 +1,18 @@
 /** @format */
 
-import { Link } from "@/interfaces/Links";
 import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 import ArrowRightIcon from "./icons/ArrowRightIcon";
 
 interface ChildrensMenuProps {
-  childrens?: Link[];
-  onClick: (childrens: Link[]) => void;
-  onClickAddTab: (info: Tab) => void;
+  childrens?: any[];
+  onClick: (childrens: any[]) => void;
+  onClickAddTab: (info: any) => void;
 }
 
 export const ChildrensMenu: React.FC<ChildrensMenuProps> = ({
   childrens,
   onClick,
-  onClickAddTab
+  onClickAddTab,
 }) => (
   <>
     <button
@@ -36,7 +35,7 @@ export const ChildrensMenu: React.FC<ChildrensMenuProps> = ({
                   onClickAddTab({
                     text: link.text,
                     component: link.component || "",
-                    link: link.link
+                    link: link.link,
                   });
                 }}
               >

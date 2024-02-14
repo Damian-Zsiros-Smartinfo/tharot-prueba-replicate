@@ -18,7 +18,7 @@ export default function Layout({ children, setActiveFileComponent }: Props) {
   return (
     <Providers>
       <Header onClick={changeVisibleMenu} visible={visibleLateralMenu} />
-      <main className="w-full flex h-[94vh] ">
+      <main className="w-full flex  ">
         <LateralMenu
           setActiveFileComponent={setActiveFileComponent}
           visible={visibleLateralMenu}
