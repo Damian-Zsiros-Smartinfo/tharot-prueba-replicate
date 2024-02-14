@@ -8,6 +8,7 @@ import { generateToken } from "@/app/utils/JWTUtils";
 export async function POST(request: NextRequest) {
   try {
     const { token } = await request.json();
+    if (!token) throw new Error();
     const tokenDecoded = validateToken(token);
     if (tokenDecoded == null)
       return NextResponse.json({

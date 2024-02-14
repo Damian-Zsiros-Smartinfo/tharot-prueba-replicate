@@ -8,13 +8,25 @@ import Head from "next/head";
 import { validateToken } from "../utils/JWTUtils";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { constants } from "../../../constants";
 
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
     if (!router) return;
-    const token = getCookie("token");
-    if (!validateToken(token as string)) router.push("/");
+    const token = getCookie("token") as string;
+    if (!token) router.push("/");
+    fetch(`/api/validate-token`, {
+      method: "POST",
+      body: JSON.stringify({
+        token,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const { valid } = data;
+        if (!valid) router.push("/");
+      });
   }, [router]);
 
   return (
