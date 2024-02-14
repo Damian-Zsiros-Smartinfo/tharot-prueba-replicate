@@ -2,6 +2,7 @@ import { UserVerify, UserWithoutId } from "@/app/types/User";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { getUserByEmail } from "../services/usersService";
+import { generateToken } from "@/app/utils/JWTUtils";
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +24,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       logued: true,
       user: data,
+      token: generateToken(userData, { expiresIn: "1d" }),
     });
   } catch (error) {
     return NextResponse.json(
