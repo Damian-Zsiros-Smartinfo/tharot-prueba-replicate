@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { getUserByEmail } from "../services/usersService";
 import { generateToken } from "@/app/utils/JWTUtils";
+import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,10 +22,12 @@ export async function POST(request: NextRequest) {
         },
         { status: 403 }
       );
+    const token = generateToken(userData, { expiresIn: "1d" });
+    cookies().set("token", token);
     return NextResponse.json({
       logued: true,
       user: data,
-      token: generateToken(userData, { expiresIn: "1d" }),
+      token,
     });
   } catch (error) {
     return NextResponse.json(

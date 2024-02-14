@@ -25,7 +25,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setIsSubmitting(true);
     const {
-      data: { logued },
+      data: { logued, token },
       error,
     } = await loginUser(UserInfo);
     const loguedBoolean = logued || false;
