@@ -29,7 +29,9 @@ export default function RegisterPage() {
     const { data, error } = await registerUser(UserInfo);
     const statusRegister = data?.registered || false;
     if (data.exists == true) {
-      alert("Ya hay otro usuario con ese email. Intenta con otro email");
+      alert(
+        "Ya hay otro usuario con ese email o con el numero de telefono. Intenta con otro email o numero de telefono"
+      );
       return setIsSubmitting(false);
     }
     if (error) {

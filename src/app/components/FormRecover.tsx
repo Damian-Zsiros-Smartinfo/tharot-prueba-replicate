@@ -13,7 +13,7 @@ interface Props {
 export default function FormRecover({
   onSubmit,
   onChange,
-  isSubmitting = false
+  isSubmitting = false,
 }: Props) {
   return (
     <form
@@ -28,7 +28,11 @@ export default function FormRecover({
         onChange={onChange}
         required
       />
-      <button type="submit" disabled={isSubmitting}>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="submit"
+        disabled={isSubmitting}
+      >
         {isSubmitting
           ? `Enviando mensaje de verificacion...`
           : `Enviar mensaje de verificacion`}
