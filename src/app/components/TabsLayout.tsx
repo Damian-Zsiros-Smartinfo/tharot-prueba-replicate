@@ -70,7 +70,13 @@ export default function TabsLayout({
           </ul>
         </header>
         <main className="h-full min-h-[400px]">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="grid place-items-center w-full h-full">
+                <div className="loader"></div>
+              </div>
+            }
+          >
             <TabActiveView route={activeFileComponent} />
           </Suspense>
         </main>
