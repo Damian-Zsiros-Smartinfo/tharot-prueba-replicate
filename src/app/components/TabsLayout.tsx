@@ -39,7 +39,7 @@ export default function TabsLayout({
 
   return (
     <section className="w-full  bg-gray-500 py-12  grid place-items-center">
-      <section className="max-w-[90%] overflow-auto w-full h-full  bg-white rounded-lg ">
+      <section className="max-w-[90%] w-full h-full  bg-white rounded-lg ">
         <header className="h-[60px]  bg-gray-50 ">
           <ul className="flex gap-1 items-center overflow-x-auto overflow-y-hidden">
             {tabs.map((tab, i) => (
@@ -69,10 +69,10 @@ export default function TabsLayout({
             ))}
           </ul>
         </header>
-        <main className="h-full min-h-[400px]">
+        <main className="h-full min-h-[400px] ">
           <Suspense
             fallback={
-              <div className="grid place-items-center w-full h-full">
+              <div className="grid place-items-center w-full h-full overflow-auto">
                 <div className="loader"></div>
               </div>
             }

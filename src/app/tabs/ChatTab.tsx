@@ -35,7 +35,6 @@ export default function ChatPage() {
       .then((res: Response) => {
         res.json().then((data: any) => {
           const { messages } = data;
-          console.log(data);
           setIsLoading(false);
           setMessages(messages);
         });

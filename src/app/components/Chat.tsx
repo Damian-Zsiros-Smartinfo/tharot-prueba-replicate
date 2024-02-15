@@ -120,7 +120,7 @@ export default function Chat({
   };
 
   return (
-    <main className="grid place-items-center gap-4 w-full min-h-[100vh] rounded-lg">
+    <main className="grid place-items-center gap-4 w-full  rounded-lg">
       <section className="w-full max-w-[500px] text-center flex flex-col gap-4 rounded">
         <header className="bg-blue-500 text-white w-full p-4 rounded">
           <h1 className="text-4xl font-bold">Chat</h1>
