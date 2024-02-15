@@ -18,13 +18,13 @@ export default function Layout({ children, setActiveFileComponent }: Props) {
   return (
     <Providers>
       <Header onClick={changeVisibleMenu} visible={visibleLateralMenu} />
-      <main className="w-full flex  ">
+      <main className="w-full flex h-screen   overflow-y-auto max-h-screen">
         <LateralMenu
           setActiveFileComponent={setActiveFileComponent}
           visible={visibleLateralMenu}
           changeVisibleMenu={changeVisibleMenu}
-        ></LateralMenu>
-        <main className="w-full min-h-[calc(100dvh-200px)]">{children}</main>
+        />
+        <main className="w-full h-full  bg-gray-500 ">{children}</main>
       </main>
     </Providers>
   );
