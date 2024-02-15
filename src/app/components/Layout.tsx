@@ -24,7 +24,7 @@ export default function Layout({ children, setActiveFileComponent }: Props) {
           visible={visibleLateralMenu}
           changeVisibleMenu={changeVisibleMenu}
         ></LateralMenu>
-        <main className="w-full">{children}</main>
+        <main className="w-full min-h-[calc(100dvh-200px)]">{children}</main>
       </main>
     </Providers>
   );
