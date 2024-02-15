@@ -10,11 +10,12 @@ export async function loginUser(userInfo: UserLoginInfo) {
       },
       body: JSON.stringify(userInfo),
     });
-    if (!res.ok) throw new Error();
+    if (!res.ok) throw new Error(res.statusText);
     const data = await res.json();
     Cookie.set("token", data?.token);
     return { data };
   } catch (error) {
-    return { error };
+    if (error instanceof Error) return { error: { message: error.message } };
+    return { error: { message: "Not defined" } };
   }
 }

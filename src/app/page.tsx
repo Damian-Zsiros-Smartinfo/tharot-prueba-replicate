@@ -23,23 +23,27 @@ export default function RegisterPage() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    const {
-      data: { logued, token },
-      error,
-    } = await loginUser(UserInfo);
-    const loguedBoolean = logued || false;
-    if (error) {
+    try {
+      setIsSubmitting(true);
+      const {
+        data: { logued, token },
+        error,
+      } = await loginUser(UserInfo);
+      const loguedBoolean = logued || false;
+      if (error) {
+        throw new Error();
+      }
+      if (loguedBoolean) {
+        setIsSubmitting(false);
+        redirect("/admin");
+      } else {
+        alert("Usuario y/o clave incorrecta/s. Intentalo de nuevo.");
+      }
+    } catch (error) {
       alert(
         "Ocurrió un error al intentar realizar el inicio de sesion. Contacte con el administrador."
       );
       setIsSubmitting(false);
-    }
-    if (loguedBoolean) {
-      setIsSubmitting(false);
-      redirect("/admin");
-    } else {
-      alert("Usuario y/o clave incorrecta/s. Intentalo de nuevo.");
     }
   };
   return (
