@@ -34,7 +34,6 @@ export default function RegisterPage() {
         throw new Error();
       }
       if (loguedBoolean) {
-        setIsSubmitting(false);
         redirect("/admin");
       } else {
         alert("Usuario y/o clave incorrecta/s. Intentalo de nuevo.");
@@ -43,6 +42,7 @@ export default function RegisterPage() {
       alert(
         "Ocurrió un error al intentar realizar el inicio de sesion. Contacte con el administrador."
       );
+    } finally {
       setIsSubmitting(false);
     }
   };
