@@ -5,9 +5,7 @@ export async function loginUser(userInfo: UserLoginInfo) {
   try {
     const res = await fetch(`${constants.API_URL}/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+
       body: JSON.stringify(userInfo),
     });
     if (!res.ok) throw new Error(res.statusText);

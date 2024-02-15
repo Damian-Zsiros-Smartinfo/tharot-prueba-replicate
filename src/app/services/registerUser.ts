@@ -10,9 +10,12 @@ export async function registerUser(userInfo: User) {
       },
       body: JSON.stringify(userInfo),
     });
+    if (!res.ok) throw new Error(res.statusText);
     const data = await res.json();
     return { data };
   } catch (error) {
-    return { data: { registered: false, exists: false }, error };
+    if (error instanceof Error)
+      return { data: { registered: false, exists: false }, error };
+    return { data: { registered: false, exists: false }, error: {} };
   }
 }
