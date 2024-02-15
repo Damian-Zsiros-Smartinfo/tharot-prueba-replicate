@@ -48,7 +48,6 @@ export default function RegisterPage() {
   };
   return (
     <main className="w-full min-h-screen grid place-items-center">
-      <form action="" onSubmit={onSubmit}></form>
       <Form
         onChange={onChange}
         onSubmit={onSubmit}
