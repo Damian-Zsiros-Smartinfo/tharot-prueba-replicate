@@ -13,13 +13,13 @@ export default function RegisterPage() {
     name: "",
     email: "",
     password: "",
-    phone: ""
+    phone: "",
   });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({
       ...UserInfo,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -41,7 +41,7 @@ export default function RegisterPage() {
     if (statusRegister) {
       alert("Has sido registrado correctamente...");
       setIsSubmitting(false);
-      redirect("/login");
+      redirect("/");
     }
   };
   return (
