@@ -2,6 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { store } from "../store";
+import { Tab } from "@/types/Tab";
 
 const initialState = {
   tabs: [
@@ -9,10 +10,10 @@ const initialState = {
       text: "Home",
       nameFile: "HomeTab.tsx",
       fixed: true,
-      link: "/usuarios"
-    }
+      link: "/usuarios",
+    },
   ],
-  activeTab: 0
+  activeTab: 0,
 };
 export const tabsSlice = createSlice({
   name: "tabs",
@@ -24,7 +25,7 @@ export const tabsSlice = createSlice({
         text: info.text,
         nameFile: info.component ?? "HomeTab.tsx",
         fixed: false,
-        link: info.link || "/"
+        link: info.link || "/",
       });
 
       state.activeTab = state.tabs.length - 1;
@@ -37,8 +38,8 @@ export const tabsSlice = createSlice({
       const tabIndex = action.payload;
       state.activeTab = state.activeTab - 1;
       state.tabs.splice(tabIndex, 1);
-    }
-  }
+    },
+  },
 });
 
 export const { addTab, changeActiveTab, closeTab } = tabsSlice.actions;
