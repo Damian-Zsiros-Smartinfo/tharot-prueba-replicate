@@ -13,7 +13,7 @@ interface Props {
 export default function FormLogin({
   onSubmit,
   onChange,
-  isSubmitting = false
+  isSubmitting = false,
 }: Props) {
   return (
     <form
@@ -35,11 +35,28 @@ export default function FormLogin({
         onChange={onChange}
         required
       />
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? `Iniciando sesion...` : `Iniciar sesion`}
-      </button>
+      <div className="text-center flex flex-col gap-2">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          {isSubmitting ? `Iniciando sesion...` : `Iniciar sesion`}
+        </button>
 
-      <Link href="/recover-password">¿Quieres recuperar tu contraseña?</Link>
+        <Link
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          href="/recover-password"
+        >
+          ¿Quieres recuperar tu contraseña?
+        </Link>
+        <Link
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          href="/register"
+        >
+          Registrarse
+        </Link>
+      </div>
     </form>
   );
 }

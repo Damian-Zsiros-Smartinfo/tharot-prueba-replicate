@@ -2,6 +2,7 @@
 import React from "react";
 import Input from "./Input";
 import { User } from "@/types/User";
+import Link from "next/link";
 
 interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -12,7 +13,7 @@ interface Props {
 export default function Form({
   onSubmit,
   onChange,
-  isSubmitting = false
+  isSubmitting = false,
 }: Props) {
   return (
     <form
@@ -41,7 +42,6 @@ export default function Form({
         onChange={onChange}
         required
       />
-      <input type="text" onChange={(e) => {}} />
       <Input
         textLabel="Password"
         type="password"
@@ -49,9 +49,19 @@ export default function Form({
         onChange={onChange}
         required
       />
-      <button type="submit" disabled={isSubmitting}>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="submit"
+        disabled={isSubmitting}
+      >
         {isSubmitting ? `Registrando...` : `Registrarme`}
       </button>
+      <Link
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded text-center"
+        href="/"
+      >
+        Si ya tienes cuenta. Ve al Login
+      </Link>
     </form>
   );
 }
