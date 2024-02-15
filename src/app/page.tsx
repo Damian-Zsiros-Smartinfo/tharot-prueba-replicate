@@ -3,10 +3,23 @@ import React, { useState } from "react";
 import { UserLoginInfo } from "@/types/User";
 import Form from "./components/FormLogin";
 import { useRouter } from "next/navigation";
-import { loginUser } from "./services/loginUser";
-import Link from "next/link";
+import { useAuthDispatch, useAuthSelector } from "@/redux/features/hooks";
+import { loginUserAsync } from "@/redux/features/authSlice";
+import { LayoutMain } from "./admin/page.client";
+import Providers from "@/redux/providers";
+import { authStore } from "@/redux/authStore";
 
 export default function RegisterPage() {
+  return (
+    <Providers store={authStore}>
+      <PageMain />
+    </Providers>
+  );
+}
+
+function PageMain() {
+  const dispatch = useAuthDispatch();
+  const logued = useAuthSelector((state) => state.authReducer.logued);
   const { push: redirect } = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [UserInfo, setUserInfo] = useState<UserLoginInfo>({
@@ -25,14 +38,8 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const {
-        data: { logued, token },
-        error,
-      } = await loginUser(UserInfo);
-      const loguedBoolean = logued || false;
-      if (error) {
-        throw new Error();
-      }
+      await dispatch(loginUserAsync(UserInfo));
+      const loguedBoolean = logued;
       if (loguedBoolean) {
         redirect("/admin");
       } else {

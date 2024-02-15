@@ -14,7 +14,7 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     if (!router) return;
-    const token = getCookie("token") as string;
+    const token = getCookie("token");
     if (!token) router.push("/");
     fetch(`/api/validate-token`, {
       method: "POST",
